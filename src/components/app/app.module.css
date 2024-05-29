@@ -1,0 +1,8 @@
+.appMain {
+    display: flex;
+    justify-content: center;
+}
+
+.appMain section {
+    width: 600px;
+}
