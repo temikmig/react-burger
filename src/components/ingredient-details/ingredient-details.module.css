@@ -1,0 +1,26 @@
+.ingredientName {
+    composes: mt-4 text text_type_main-medium from global;
+}
+
+.ingredientDetailsList {
+    display: flex;
+    padding: 0px;
+    margin-bottom: 0px;
+    gap: 20px;
+    composes: mt-8 from global;
+}
+
+.ingredientDetailsItem {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.ingredientDetailsItemHead {
+    composes: text text_type_main-default text_color_inactive from global;
+}
+
+.ingredientDetailsItemVal {
+    composes: text text_type_digits-default text_color_inactive from global;
+}

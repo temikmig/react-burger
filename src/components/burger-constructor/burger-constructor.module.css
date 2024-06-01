@@ -1,0 +1,50 @@
+.burgerConstructor {
+    composes: mt-25 pr-1 from global;
+}
+
+.burgerConstructorCont {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: flex-end;
+}
+
+.burgerIngredientsList {
+    overflow-y: auto;
+    max-height: 210px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.burgerIngredientsListFixItem {
+    width: 600px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.burgerIngredientsListItem {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.burgerOrder {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 40px;
+    composes: mt-10 from global;
+}
+
+.burgerOrderPrice {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    composes: text text_type_digits-medium from global;
+}
+
+.burgerOrderPrice svg {
+    width: 32px;
+    height: 32px;
+}
