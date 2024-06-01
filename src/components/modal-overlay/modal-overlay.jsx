@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 
 const modalRoot = document.getElementById("react-modals");
 
-const ModalOverlay = ({ children, handleClose }) => {
+const ModalOverlay = ({ children, handleCloseOut }) => {
   return ReactDOM.createPortal((
-    <div className={styles.modalOverlay}>{ children }</div>
+    <div className={styles.modalOverlay} onClick={handleCloseOut}>{ children }</div>
   ), modalRoot);
 };
 

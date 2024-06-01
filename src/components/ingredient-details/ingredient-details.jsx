@@ -13,13 +13,13 @@ function IngredientDetailsItem( {head, val} ) {
 
 IngredientDetailsItem.propTypes = {
     head: PropTypes.string,
-    val: PropTypes.string
+    val: PropTypes.number
 }; 
 
-function IngredientDetails( {data} ) {
+function IngredientDetails({ data }) {
     return(
         <>
-        <img src={data.image_large} alt="img" />
+        <img src={data.image_large} alt={data.name} />
         <h2 className={css.ingredientName}>{data.name}</h2>
         <ul className={css.ingredientDetailsList}>
             <IngredientDetailsItem head="Калории, ккал" val={data.calories} />
@@ -33,13 +33,13 @@ function IngredientDetails( {data} ) {
 
 IngredientDetails.propTypes = {
     data: PropTypes.shape({
-        image_large: PropTypes.string,
         name: PropTypes.string,
         calories: PropTypes.number,
         proteins: PropTypes.number,
         fat: PropTypes.number,
         carbohydrates: PropTypes.number,
-    })
+        image_large:PropTypes.string
+    }).isRequired
 }; 
 
 export default IngredientDetails;

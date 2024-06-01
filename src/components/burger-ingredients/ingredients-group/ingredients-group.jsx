@@ -11,7 +11,7 @@ function IngredientsGroup({ groupName, groupList, groupId }) {
         <section className={css.ingredientsGroup} id={groupId}>
             <h2 className={css.ingredientsGroupHeader}>{groupName}</h2>
             <div className={css.ingredientsGroupContent}>
-                {groupList.map((item, index) => <IngredientItem key={index} data={item} currentCounter={index==0?1:0} /> )}
+                {groupList.map((item, index) => <IngredientItem key={item._id} data={item} currentCounter={index===0?1:0} /> )}
             </div>
         </section>
     );

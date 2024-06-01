@@ -25,8 +25,8 @@ const Modal = ( { cont, header='', handleClose } ) => {
       }, [handleCloseModal]);
 
     return(
-        <ModalOverlay>
-            <div className={css.modalWin}>
+        <ModalOverlay handleCloseOut={handleCloseModal}>
+            <div className={css.modalWin} onClick={e => e.stopPropagation()}>
                 <h1 className={header!==''?css.modalHeader:css.modalHeaderNoHeader}>{ header }<div onClick={handleCloseModal} className={css.modalCloseButton}><CloseIcon type="primary" /></div></h1>
                 { cont }
             </div>

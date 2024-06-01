@@ -66,13 +66,15 @@ BurgerConstructor.propTypes = {
     currentBun: PropTypes.shape({
         name: PropTypes.string,
         price: PropTypes.number,
-        image: PropTypes.string,
+        image: PropTypes.string
     }),
-    ingredients: PropTypes.shape({
-        name: PropTypes.string,
-        price: PropTypes.number,
-        image: PropTypes.string,
-    })
+    ingredients: PropTypes.arrayOf(
+        PropTypes.shape({
+            name: PropTypes.string,
+            price: PropTypes.number,
+            image: PropTypes.string
+        })
+    )
 }; 
 
 export default BurgerConstructor;

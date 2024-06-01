@@ -35,7 +35,7 @@ function IngredientItem( {data, currentCounter} ) {
         <>
         <article className={css.ingredientItem} onClick={handleOpenModal}>
             <div className={css.ingredientImage}>
-                <img src={data.image} alt="img" />
+                <img src={data.image} alt={ingredient.name} />
             </div>
             <div className={css.ingredientPrice}><CurrencyIcon type="primary" />{ingredient.price}</div>
             <h3 className={css.ingredientName}>{ingredient.name}</h3>
@@ -48,11 +48,7 @@ function IngredientItem( {data, currentCounter} ) {
 
 IngredientItem.propTypes = {
     counter: PropTypes.number,
-    data: PropTypes.shape({
-        name: PropTypes.string,
-        price: PropTypes.number,
-        image: PropTypes.string
-    })
+    data: PropTypes.object
 }
 
 export default IngredientItem;
