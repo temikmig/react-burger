@@ -21,7 +21,7 @@ const AppHeader = () => {
                 </nav>
                 <Logo />
                 <nav className={css.headerNav} style={{ justifyContent: 'end' }} >
-                    <HeaderLink text="Личный кабинет" icon={propProfileIcon} active={isFalse} />
+                    <HeaderLink text="Личный кабинетик" icon={propProfileIcon} active={isFalse} />
                 </nav>
             </div>
         </header>
