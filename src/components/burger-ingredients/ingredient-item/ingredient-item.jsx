@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import css from './ingredient-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { ingredientDetailsModalAdd, ingredientDetailsModalDel } from "../../../services/actions/burger-ingredient-details";
+import { addIngredientDetailsModal, delIngredientDetailsModal } from "../../../services/actions/burger-ingredient-details";
 import { useDispatch, useSelector } from "react-redux";
 
 import Modal from '../../modal/modal.jsx';
@@ -47,7 +47,7 @@ function IngredientItem( { data } ) {
     const handleOpenModal = () => {
         setIsModalOpen(true);
 
-        dispatch(ingredientDetailsModalAdd({
+        dispatch(addIngredientDetailsModal({
             ingredient: ingredient
         }));
     }
@@ -55,7 +55,7 @@ function IngredientItem( { data } ) {
     const handleCloseModal = () => {
         setIsModalOpen(false);
 
-        dispatch(ingredientDetailsModalDel({
+        dispatch(delIngredientDetailsModal({
             ingredient: ingredient._id
         }));
     }

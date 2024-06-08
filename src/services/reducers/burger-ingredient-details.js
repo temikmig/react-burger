@@ -1,4 +1,4 @@
-import { INGREDIENT_DETAILS_MODAL_ADD, INGREDIENT_DETAILS_MODAL_DEL } from '../actions/burger-ingredient-details';
+import { ADD_INGREDIENT_DETAILS_MODAL, DEL_INGREDIENT_DETAILS_MODAL } from '../actions/burger-ingredient-details';
 
 const initialState = {
     ingredientData: []
@@ -6,12 +6,12 @@ const initialState = {
 
 export const ingredientDetails = (state = initialState, action) => { 
     switch (action.type) {
-        case INGREDIENT_DETAILS_MODAL_ADD: return { 
+        case ADD_INGREDIENT_DETAILS_MODAL: return { 
             ...state, 
             ingredientData: action.payload.ingredient
         }
 
-        case INGREDIENT_DETAILS_MODAL_DEL: return { 
+        case DEL_INGREDIENT_DETAILS_MODAL: return { 
             ...state, 
             ingredientData: []
         }

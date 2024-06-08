@@ -1,23 +1,25 @@
-export const INGREDIENT_ADD = 'INGREDIENT_ADD';
-export const INGREDIENT_DEL = 'INGREDIENT_DEL';
-export const INGREDIENTS_CLEAR = 'INGREDIENTS_CLEAR';
-export const INGREDIENTS_MOVE = 'INGREDIENTS_MOVE';
 
-export const ingredientAdd = ingredient => ({
-    type: INGREDIENT_ADD,
+
+export const ADD_INGREDIENT = 'ADD_INGREDIENT';
+export const DEL_INGREDIENT = 'DEL_INGREDIENT';
+export const CLEAR_INGREDIENTS = 'CLEAR_INGREDIENTS';
+export const MOVE_INGREDIENTS = 'MOVE_INGREDIENTS';
+
+export const addIngredient = ingredient => ({
+    type: ADD_INGREDIENT,
     payload: ingredient
 });
 
-export const ingredientDel = uid => ({
-    type: INGREDIENT_DEL,
+export const delIngredient = uid => ({
+    type: DEL_INGREDIENT,
     payload: uid
 });
 
-export const ingredientsClear = () => ({
-    type: INGREDIENTS_CLEAR,
+export const clearIngredients = () => ({
+    type: CLEAR_INGREDIENTS,
 });
 
-export const ingredientsMove = ({toIndex, fromIndex}) => ({
-    type: INGREDIENTS_MOVE,
+export const moveIngredients = ({toIndex, fromIndex}) => ({
+    type: MOVE_INGREDIENTS,
     payload: {toIndex, fromIndex}
 });

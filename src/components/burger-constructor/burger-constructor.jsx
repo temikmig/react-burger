@@ -3,9 +3,9 @@ import { useState, useCallback } from 'react';
 import css from './burger-constructor.module.css';
 import { Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components'; 
 
-import { ingredientAdd, ingredientsClear, ingredientsMove } from "../../services/actions/burger-constructor";
+import { addIngredient, clearIngredients, moveIngredients } from "../../services/actions/burger-constructor";
 
-import { orderGet } from "../../services/actions/burger-order";
+import { getOrder } from "../../services/actions/burger-order";
 import { useDispatch, useSelector } from "react-redux";
 
 import { useDrop } from 'react-dnd';
@@ -14,6 +14,8 @@ import BurgerConstructorItem from './burger-constructor-item/burger-constructor-
 
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
+
+import uuid from 'react-uuid';
 
 const BurgerConstructor = () => {
     const currentBun = useSelector(store => store.burgerConstructor.bun);
@@ -24,13 +26,13 @@ const BurgerConstructor = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {
-        dispatch(orderGet());
+        dispatch(getOrder());
         setIsModalOpen(true);
     }
     
     const handleCloseModal = () => {
         setIsModalOpen(false);
-        dispatch(ingredientsClear());
+        dispatch(clearIngredients());
     }
 
     const orderPriceVal = useSelector(store => {
@@ -46,8 +48,8 @@ const BurgerConstructor = () => {
     const [, constructorDropRef] = useDrop({
         accept: "constructorContainer",
         drop(item) {
-            dispatch(ingredientAdd({
-                ingredient: item
+            dispatch(addIngredient({
+                ingredient: {...item, uid: uuid()}
             }));
         },
         collect: monitor => ({
@@ -56,7 +58,7 @@ const BurgerConstructor = () => {
     });
 
     const moveIngredient = useCallback((toIndex, fromIndex) => {
-        dispatch(ingredientsMove({
+        dispatch(moveIngredients({
             toIndex: toIndex,
             fromIndex: fromIndex
         }));

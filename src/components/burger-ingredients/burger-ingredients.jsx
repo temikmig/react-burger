@@ -4,7 +4,7 @@ import css from './burdger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'; 
 
 import { useSelector, useDispatch } from 'react-redux';
-import { ingredientsListGet } from '../../services/actions/burger-ingredients-list';
+import { getIngredientsList } from '../../services/actions/burger-ingredients-list';
 
 import IngredientsGroup from './ingredients-group/ingredients-group';
 
@@ -13,7 +13,7 @@ const BurgerIngredients = () => {
     const dispatch = useDispatch();
 
     useEffect(()=>{
-      dispatch(ingredientsListGet());
+      dispatch(getIngredientsList());
     },[dispatch]);
 
     const { data, isLoad, isError } = useSelector(store => store.ingredientsList);

@@ -3,7 +3,7 @@ import css from './burger-constructor-item.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'; 
 import { useDispatch } from "react-redux";
-import { ingredientDel } from "../../../services/actions/burger-constructor";
+import { delIngredient } from "../../../services/actions/burger-constructor";
 
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
@@ -55,7 +55,7 @@ const BurgerConstructorItem = ( {currentIngredient, index, moveIngredient} ) => 
                 text={currentIngredient.name}
                 price={currentIngredient.price}
                 thumbnail={currentIngredient.image}
-                handleClose={() => dispatch(ingredientDel({uid: currentIngredient.uid}))}
+                handleClose={() => dispatch(delIngredient({uid: currentIngredient.uid}))}
             />
         </div>
     )

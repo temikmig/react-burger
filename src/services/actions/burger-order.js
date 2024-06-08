@@ -1,23 +1,20 @@
-export const ORDER_REQUEST = 'ORDER_REQUEST';
-export const ORDER_SUCCESS = 'ORDER_SUCCESS';
-export const ORDER_ERROR = 'ORDER_ERROR';
+import { BASE_URL, checkReponse } from "../../utils/config";
 
-export function orderGet(orderCheck) {
+export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
+export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
+export const GET_ORDER_ERROR = 'GET_ORDER_ERROR';
+
+export function getOrder(orderCheck) {
+    
     const orderCheckData = {'ingredients': orderCheck};
 
     return function(dispatch) {
         dispatch({
-            type: ORDER_REQUEST
+            type: GET_ORDER_REQUEST
         })
 
         if(orderCheck) {
-            const BURGERAPI = "https://norma.nomoreparties.space/api";
-            
-            const checkReponse = (res) => {
-                return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-            };
-        
-            fetch(`${BURGERAPI}/orders`, {
+            fetch(`${BASE_URL}/orders`, {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: { 'Content-Type': 'application/json' },
@@ -28,22 +25,22 @@ export function orderGet(orderCheck) {
             .then(res => {
                 if (res && res.success) {
                     dispatch({
-                        type: ORDER_SUCCESS,
+                        type: GET_ORDER_SUCCESS,
                         payload: res
                     })
                 } else {
                     dispatch({
-                        type: ORDER_ERROR
+                        type: GET_ORDER_ERROR
                     })
                 }
             })
             .catch( err => {
                 dispatch({
-                    type: ORDER_ERROR
+                    type: GET_ORDER_ERROR
                 })
             });
         } else dispatch({
-            type: ORDER_ERROR
+            type: GET_ORDER_ERROR
         });
     }
 }

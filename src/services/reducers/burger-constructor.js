@@ -1,5 +1,4 @@
-import { INGREDIENT_ADD, INGREDIENT_DEL, INGREDIENTS_CLEAR, INGREDIENTS_MOVE } from '../actions/burger-constructor';
-import uuid from 'react-uuid';
+import { ADD_INGREDIENT, DEL_INGREDIENT, CLEAR_INGREDIENTS, MOVE_INGREDIENTS } from '../actions/burger-constructor';
 
 const initialState = {
     bun: null,
@@ -8,28 +7,26 @@ const initialState = {
 
 export const burgerConstructor = (state = initialState, action) => { 
     switch (action.type) {
-        case INGREDIENT_ADD: {
-            let obj = action.payload.ingredient;
-            obj.uid = uuid();
-
+        case ADD_INGREDIENT: {
+            console.log(action.payload.ingredient);
             if(action.payload.ingredient.type==='bun') {
                 return {...state, 
                     bun: action.payload.ingredient
                 }
             } else {
                 return {...state, 
-                    ingredients: [...state.ingredients, obj]
+                    ingredients: [...state.ingredients, action.payload.ingredient]
                 }
             }
         }
 
-        case INGREDIENT_DEL: {
+        case DEL_INGREDIENT: {
             return {...state, 
                 ingredients: state.ingredients.filter((item) => action.payload.uid!==item.uid)
             }
         }
 
-        case INGREDIENTS_CLEAR: {
+        case CLEAR_INGREDIENTS: {
             return {
                 ...state,
                 bun: null,
@@ -37,7 +34,7 @@ export const burgerConstructor = (state = initialState, action) => {
             }
         }
 
-        case INGREDIENTS_MOVE: {
+        case MOVE_INGREDIENTS: {
             const ingredients = [...state.ingredients];
 
             const fromIndex = ((action.payload.fromIndex !== undefined) &&

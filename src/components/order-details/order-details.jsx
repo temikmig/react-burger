@@ -3,7 +3,7 @@ import css from './order-details.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useEffect } from "react";
 
-import { orderGet } from '../../services/actions/burger-order';
+import { getOrder } from '../../services/actions/burger-order';
 
 import { useSelector, useDispatch  } from "react-redux";
 
@@ -21,7 +21,7 @@ const OrderDetais = () => {
     }
   
     useEffect(()=> {
-        if(orderCheck.length>0) dispatch(orderGet(orderCheck));    
+        if(orderCheck.length>0) dispatch(getOrder(orderCheck));    
     }, [dispatch])
 
     if (isError) {

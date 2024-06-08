@@ -1,12 +1,12 @@
-export const INGREDIENT_DETAILS_MODAL_ADD = 'INGREDIENT_DETAILS_MODAL_ADD';
-export const INGREDIENT_DETAILS_MODAL_DEL = 'INGREDIENT_DETAILS_MODAL_DEL';
+export const ADD_INGREDIENT_DETAILS_MODAL = 'ADD_INGREDIENT_DETAILS_MODAL';
+export const DEL_INGREDIENT_DETAILS_MODAL = 'DEL_INGREDIENT_DETAILS_MODAL';
 
-export const ingredientDetailsModalAdd = ingredient => ({
-    type: INGREDIENT_DETAILS_MODAL_ADD,
+export const addIngredientDetailsModal = ingredient => ({
+    type: ADD_INGREDIENT_DETAILS_MODAL,
     payload: ingredient
 });
 
-export const ingredientDetailsModalDel = _id => ({
-    type: INGREDIENT_DETAILS_MODAL_DEL,
+export const delIngredientDetailsModal = _id => ({
+    type: DEL_INGREDIENT_DETAILS_MODAL,
     payload: _id
 });
