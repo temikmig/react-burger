@@ -2,6 +2,8 @@ import React from 'react';
 import css from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 
+import { useSelector } from 'react-redux';
+
 function IngredientDetailsItem( {head, val} ) {
     return(
         <li className={css.ingredientDetailsItem}>
@@ -16,30 +18,22 @@ IngredientDetailsItem.propTypes = {
     val: PropTypes.number
 }; 
 
-function IngredientDetails({ data }) {
+function IngredientDetails() {
+    const ingredientData = useSelector(store => store.ingredientDetails.ingredientData);
+
     return(
         <>
-        <img src={data.image_large} alt={data.name} />
-        <h2 className={css.ingredientName}>{data.name}</h2>
+        <img src={ingredientData.image_large} alt={ingredientData.name} />
+        <h2 className={css.ingredientName}>{ingredientData.name}</h2>
         <ul className={css.ingredientDetailsList}>
-            <IngredientDetailsItem head="Калории, ккал" val={data.calories} />
-            <IngredientDetailsItem head="Белки, г" val={data.proteins} />
-            <IngredientDetailsItem head="Жиры, г" val={data.fat} />
-            <IngredientDetailsItem head="Углеводы, г" val={data.carbohydrates} />
+            <IngredientDetailsItem head="Калории, ккал" val={ingredientData.calories} />
+            <IngredientDetailsItem head="Белки, г" val={ingredientData.proteins} />
+            <IngredientDetailsItem head="Жиры, г" val={ingredientData.fat} />
+            <IngredientDetailsItem head="Углеводы, г" val={ingredientData.carbohydrates} />
         </ul>
+        
         </>
     );
 }
-
-IngredientDetails.propTypes = {
-    data: PropTypes.shape({
-        name: PropTypes.string,
-        calories: PropTypes.number,
-        proteins: PropTypes.number,
-        fat: PropTypes.number,
-        carbohydrates: PropTypes.number,
-        image_large:PropTypes.string
-    }).isRequired
-}; 
 
 export default IngredientDetails;

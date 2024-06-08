@@ -1,11 +1,36 @@
 import React from "react";
 import css from './order-details.module.css';
 import { CheckMarkIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useEffect } from "react";
+
+import { orderGet } from '../../services/actions/burger-order';
+
+import { useSelector, useDispatch  } from "react-redux";
 
 const OrderDetais = () => {
-    return(
+    const dispatch = useDispatch();
+    const { orderData, isLoad, isError } = useSelector(store => store.burgerOrder);
+
+    const orderBun = useSelector(store => store.burgerConstructor.bun);
+    const orderIngredients = useSelector(store => store.burgerConstructor.ingredients);
+    const orderCheck = orderIngredients.map(item => item._id);
+
+    if(orderBun) {
+        orderCheck.push(orderBun._id);
+        orderCheck.unshift(orderBun._id);
+    }
+  
+    useEffect(()=> {
+        if(orderCheck.length>0) dispatch(orderGet(orderCheck));    
+    }, [dispatch])
+
+    if (isError) {
+        return <p className={css.burgerOrderDesc}>Произошла ошибка при получении данных</p>
+    } else if (isLoad) {
+        return <p className={css.burgerOrderDesc}>Загрузка...</p>
+    } else return(
         <div className={css.burgerOrder}>
-            <p className={css.burgerOrderNum}>034536</p>
+            <p className={css.burgerOrderNum}>{orderData.order.number}</p>
             <p className={css.burgerOrderDesc}>идентификатор заказа</p>
             <CheckMarkIcon type="primary" />
             <p className={css.burgerOrderDescTop}>Ваш заказ начали готовить</p>

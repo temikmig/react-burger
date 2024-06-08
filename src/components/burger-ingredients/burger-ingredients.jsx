@@ -1,26 +1,61 @@
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from 'prop-types';
 import css from './burdger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'; 
 
+import { useSelector, useDispatch } from 'react-redux';
+import { ingredientsListGet } from '../../services/actions/burger-ingredients-list';
+
 import IngredientsGroup from './ingredients-group/ingredients-group';
 
-const BurgerIngredients = (props) => {
-    const list = props.data;
-    const [current, setCurrent] = React.useState('bun');
+const BurgerIngredients = () => {
 
-    return (
+    const dispatch = useDispatch();
+
+    useEffect(()=>{
+      dispatch(ingredientsListGet());
+    },[dispatch]);
+
+    const { data, isLoad, isError } = useSelector(store => store.ingredientsList);
+
+    const success = data.success;
+
+    const list = data.data;
+
+    const [current, setCurrent] = useState('bun');
+
+    const bunRef = useRef(null);
+    const sauceRef = useRef(null);
+    const mainRef = useRef(null);
+
+    function handleScroll(e) {
+        const bunPos = bunRef.current.offsetTop;
+        const saucePos = sauceRef.current.offsetTop;
+        const mainPos = mainRef.current.offsetTop;
+
+        const pos = (e.currentTarget.scrollTop + bunPos);
+
+        if(pos>bunPos&&pos<saucePos) setCurrent('bun');
+        if(pos>saucePos&&pos<mainPos) setCurrent('sauce');
+        if(pos>mainPos) setCurrent('main');
+    }
+
+    if (isError) {
+        return <p className={css.burgerOrderDesc}>Произошла ошибка при получении данных</p>
+    } else if (isLoad) {
+        return <p className={css.burgerOrderDesc}>Загрузка...</p>
+    } else if(success) return (
         <section className={css.BurgerIngredients}>
             <h1 className={css.BurgerIngredientsHeader}>Соберите бургер</h1>
             <div style={{ display: 'flex' }} className="mt-5">
-                <Tab value="bun" active={current === 'bun'} onClick={setCurrent}>Булки</Tab>
-                <Tab value="sauce" active={current === 'sauce'} onClick={setCurrent}>Соусы</Tab>
-                <Tab value="main" active={current === 'main'} onClick={setCurrent}>Начинка</Tab>
+                <Tab value="bun" active={current === 'bun'} onClick={() => {setCurrent('bun'); bunRef.current.scrollIntoView({ behavior: "smooth" })}}>Булки</Tab>
+                <Tab value="sauce" active={current === 'sauce'} onClick={() => {setCurrent('sauce'); sauceRef.current.scrollIntoView({ behavior: "smooth" })}}>Соусы</Tab>
+                <Tab value="main" active={current === 'main'} onClick={() => {setCurrent('main'); mainRef.current.scrollIntoView({ behavior: "smooth" })}}>Начинка</Tab>
             </div>
-            <section className={css.BurgerIngredientsList}>
-                <IngredientsGroup groupName="Булки" groupId="bun" groupList={list.filter((item) => item.type==='bun')}/>
-                <IngredientsGroup groupName="Соусы" groupId="sauce" groupList={list.filter((item) => item.type==='sauce')}/>
-                <IngredientsGroup groupName="Начинка" groupId="main" groupList={list.filter((item) => item.type==='main')} />
+            <section className={css.BurgerIngredientsList} onScroll={handleScroll}>
+                <IngredientsGroup groupName="Булки" headRef={bunRef} groupList={list.filter((item) => item.type==='bun')}/>
+                <IngredientsGroup groupName="Соусы" headRef={sauceRef} groupList={list.filter((item) => item.type==='sauce')}/>
+                <IngredientsGroup groupName="Начинка" headRef={mainRef} groupList={list.filter((item) => item.type==='main')} />
             </section>
         </section>
     );

@@ -7,11 +7,11 @@ import PropTypes from 'prop-types';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
-const Modal = ( { cont, header='', handleClose } ) => {
+const Modal = ( { cont, header='', handleCloseThis } ) => {
 
     const handleCloseModal = useCallback(() => {
-        handleClose();
-    }, [handleClose]);
+        handleCloseThis();
+    }, [handleCloseThis]);
 
     useEffect(() => {
         const closeModalByEsc = (e) => {
@@ -37,7 +37,7 @@ const Modal = ( { cont, header='', handleClose } ) => {
 Modal.propTypes = {
     cont: PropTypes.object,
     header: PropTypes.string,
-    handleClose: PropTypes.func
+    handleCloseThis: PropTypes.func
 }; 
 
 export default Modal;

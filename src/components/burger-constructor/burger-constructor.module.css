@@ -10,23 +10,19 @@
 }
 
 .burgerIngredientsList {
+    width: 100%;
     overflow-y: auto;
     max-height: 210px;
     display: flex;
     flex-direction: column;
     gap: 10px;
+    align-items: flex-end;
 }
 
 .burgerIngredientsListFixItem {
     width: 600px;
     display: flex;
     justify-content: flex-end;
-}
-
-.burgerIngredientsListItem {
-    display: flex;
-    align-items: center;
-    gap: 8px;
 }
 
 .burgerOrder {
@@ -47,4 +43,27 @@
 .burgerOrderPrice svg {
     width: 32px;
     height: 32px;
+}
+
+.BurderIngredientsEmpty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #686879;
+    composes: constructor-element from global;
+}
+
+.BurderIngredientsEmptyTop {
+    composes: constructor-element_pos_top from global;
+} 
+
+.BurderIngredientsEmptyBottom {
+    composes: constructor-element_pos_bottom from global;
+}
+
+.BurderIngredientsEmptyList {
+    height: 210px;
+    width: 100%;
+    align-items: center;
+    composes: BurderIngredientsEmpty;
 }
