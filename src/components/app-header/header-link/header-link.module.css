@@ -13,6 +13,7 @@
 }
 
 .headerLink:hover {
+    text-decoration: none;
     background: #292934;
 }
 

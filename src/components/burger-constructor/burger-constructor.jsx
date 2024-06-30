@@ -17,17 +17,23 @@ import OrderDetails from '../order-details/order-details';
 
 import uuid from 'react-uuid';
 
+import { useNavigate } from 'react-router-dom';
+
 const BurgerConstructor = () => {
+    const navigate = useNavigate();
     const currentBun = useSelector(store => store.burgerConstructor.bun);
     const ingredients = useSelector(store => store.burgerConstructor.ingredients);
+    const { userLoggedIn } = useSelector(store => store.userData);
 
     const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleOpenModal = () => {
-        dispatch(getOrder());
-        setIsModalOpen(true);
+        if(userLoggedIn) {
+            dispatch(getOrder());
+            setIsModalOpen(true);
+        } else navigate('/login');
     }
     
     const handleCloseModal = () => {
@@ -45,7 +51,7 @@ const BurgerConstructor = () => {
         return priceVal;
     });
 
-    const [, constructorDropRef] = useDrop({
+    const [{isHover}, constructorDropRef] = useDrop({
         accept: "constructorContainer",
         drop(item) {
             dispatch(addIngredient({
@@ -72,7 +78,7 @@ const BurgerConstructor = () => {
 
     return (
         <>
-        <section ref={constructorDropRef} className={css.burgerConstructor}>
+        <section ref={constructorDropRef} className={`${css.burgerConstructor} ${isHover ? css.burgerConstructorContHover : ''}`}>
             <div className={css.burgerConstructorCont}>
                 <div className={css.burgerIngredientsListFixItem}>
                     {currentBun ?

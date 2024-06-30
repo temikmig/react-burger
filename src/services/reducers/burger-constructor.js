@@ -8,7 +8,6 @@ const initialState = {
 export const burgerConstructor = (state = initialState, action) => { 
     switch (action.type) {
         case ADD_INGREDIENT: {
-            console.log(action.payload.ingredient);
             if(action.payload.ingredient.type==='bun') {
                 return {...state, 
                     bun: action.payload.ingredient

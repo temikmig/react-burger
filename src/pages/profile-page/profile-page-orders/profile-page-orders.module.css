@@ -1,0 +1,13 @@
+.ordersList {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    composes: mt-10 from global;
+}
+
+.ordersList article:first-child {
+    margin-top: 0px;
+}
+
+.ordersList article {
+    margin-top: 20px;
+}

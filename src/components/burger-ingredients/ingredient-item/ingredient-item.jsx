@@ -75,7 +75,6 @@ function IngredientItem( { data } ) {
             <h3 className={css.ingredientName}>{ingredient.name}</h3>
             {currentCounter>0&&<Counter count={currentCounter} size="default" extraClass="m-1" />}
         </article>
-{isModalOpen && <Modal cont={<IngredientDetails />} header="Детали ингредиента" handleCloseThis={handleCloseModal} />}
         </>
     );
 }

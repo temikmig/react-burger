@@ -1,25 +1,52 @@
 import React from 'react';
 import css from './app.module.css';
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+import { Routes, Route, useLocation, useNavigate } from 'react-router-dom';
+import { 
+    HomePage, 
+    LoginPage, 
+    RegisterPage, 
+    ForgotPasswordPage, 
+    ResetPasswordPage, 
+    ProfilePage, 
+    IngredientPage,
+    NotFound404 
+} from '../../pages';
 
-import AppHeader from '../app-header/app-header';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import { ProtectedRouteElement } from '../protected-route';
+
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import Modal from '../modal/modal';
 
 const App = () => {
+    // const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const background = location.state;
+
+    const handleCloseModal = () => {
+        navigate(-1)
+    };
+
     return (
         <>
-            <AppHeader />
-            <main className={css.appMain}>
-                <DndProvider backend={HTML5Backend}>
-                    <BurgerIngredients data={[]} />
-                    <BurgerConstructor />
-                </DndProvider>
-            </main>
+            <Routes location={background || location}>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/register" element={<RegisterPage />} />
+                <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+                <Route path="/reset-password" element={<ResetPasswordPage />} />
+                    <Route path="/profile/*" element={<ProtectedRouteElement element={<ProfilePage />} />} />
+                <Route path="*" element={<NotFound404 />} />
+                <Route path="/ingredients/:id" element={<IngredientPage />} />
+            </Routes>
+            {background && (
+                <Routes>
+                    <Route path="/ingredients/:id" element={<Modal cont={<IngredientDetails />} header="Детали ингредиента" handleCloseThis={handleCloseModal} />} />
+                </Routes>
+            )}
         </>
-            );
+    );
 }
 
- export default App;
+export default App;

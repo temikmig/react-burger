@@ -41,9 +41,17 @@ const BurgerIngredients = () => {
     }
 
     if (isError) {
-        return <p className={css.burgerOrderDesc}>Произошла ошибка при получении данных</p>
+        return (
+            <section className={css.BurgerIngredients}>
+            <h1 className={css.loadState}>Произошла ошибка при получении данных</h1>
+            </section>
+        );
     } else if (isLoad) {
-        return <p className={css.burgerOrderDesc}>Загрузка...</p>
+        return (
+            <section className={css.BurgerIngredients}>
+            <h1 className={css.loadState}>Загрузка...</h1>
+            </section>
+        );
     } else if(success) return (
         <section className={css.BurgerIngredients}>
             <h1 className={css.BurgerIngredientsHeader}>Соберите бургер</h1>

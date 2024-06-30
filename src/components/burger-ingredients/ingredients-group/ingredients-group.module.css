@@ -16,3 +16,7 @@
     flex-wrap: wrap;
     /* composes: pl-4 from global; */
 }
+
+.ingredientsGroupContent a {
+    text-decoration: none;
+}

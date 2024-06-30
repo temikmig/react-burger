@@ -1,9 +1,12 @@
 .ingredientName {
+    display: flex;
+    justify-content: center;
     composes: mt-4 text text_type_main-medium from global;
 }
 
 .ingredientDetailsList {
     display: flex;
+    justify-content: center;
     padding: 0px;
     margin-bottom: 0px;
     gap: 20px;

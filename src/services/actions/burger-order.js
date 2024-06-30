@@ -1,4 +1,5 @@
-import { BASE_URL, checkReponse } from "../../utils/config";
+import { BASE_URL } from "../../utils/config";
+import { getCookie, fetchRequestRefresh } from "../../utils/utils";
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -13,15 +14,19 @@ export function getOrder(orderCheck) {
             type: GET_ORDER_REQUEST
         })
 
+        const accessToken = getCookie('accessToken');
+
         if(orderCheck) {
-            fetch(`${BASE_URL}/orders`, {
+            fetchRequestRefresh(`${BASE_URL}/orders`, {
                 method: 'POST',
                 cache: 'no-cache',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer '+accessToken 
+                },
                 redirect: 'follow',
                 body: JSON.stringify(orderCheckData)
             })
-            .then(checkReponse)
             .then(res => {
                 if (res && res.success) {
                     dispatch({

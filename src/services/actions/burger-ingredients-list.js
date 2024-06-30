@@ -1,4 +1,5 @@
-import { BASE_URL, checkReponse } from "../../utils/config";
+import { BASE_URL } from "../../utils/config";
+import { fetchRequest } from "../../utils/utils";
 
 export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENTS_LIST_REQUEST';
 export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
@@ -10,8 +11,7 @@ export function getIngredientsList() {
             type: GET_INGREDIENTS_LIST_REQUEST
         })
             
-        fetch(`${BASE_URL}/ingredients`)
-        .then(checkReponse)
+        fetchRequest(`${BASE_URL}/ingredients`)
         .then(res => {
             if (res && res.success) {
                 dispatch({

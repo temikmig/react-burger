@@ -1,0 +1,23 @@
+.navLink {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    border-radius: 32px;
+    transition: 0.15s;
+    color: #fff;
+    composes: mr-2 pl-5 pt-4 pr-5 pb-4 from global;
+}
+
+.navText {
+    composes: text text_type_main-medium ml-2 from global;
+}
+
+.navLink:hover {
+    text-decoration: none;
+    background: #292934;
+}
+
+.navLink:active {
+    transform: scale(0.95);
+    background: #2e2e39;
+}

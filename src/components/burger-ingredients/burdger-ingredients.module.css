@@ -10,3 +10,7 @@
     max-height: calc(100vh - 284px);
     overflow-y: auto;
 }
+
+.loadState {
+    composes: text text_type_main-default from global;
+}

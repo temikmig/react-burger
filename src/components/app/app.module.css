@@ -1,8 +1,14 @@
-.appMain {
-    display: flex;
-    justify-content: center;
+a {
+    color: #4C4CFF;
+    text-decoration: none;
 }
 
-.appMain section {
-    width: 600px;
+a:hover {
+    text-decoration: underline;
 }
+
+a:active {
+    color: #8b8bf9;
+
+}
+

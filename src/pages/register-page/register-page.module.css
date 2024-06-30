@@ -1,0 +1,4 @@
+.errorMessage {
+    text-align: center;
+    composes: input__error text_type_main-default from global;
+}

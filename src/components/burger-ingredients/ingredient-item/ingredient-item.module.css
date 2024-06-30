@@ -4,6 +4,7 @@
     transition: 0.15s;
     cursor: pointer;
     position: relative;
+    color: #fff;
     composes: mt-6 ml-4 mr-2 from global;
 }
 
