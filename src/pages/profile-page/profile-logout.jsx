@@ -1,12 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
 
 import {  } from '../../services/actions/user-data';
-import { logoutUser, getUserData } from '../../services/actions/user-data';
-
-import AppHeader from '../../components/app-header/app-header';
+import { logoutUser } from '../../services/actions/user-data';
 
 export const LogoutPage = () => {
     const { userLoggedIn } = useSelector(store => store.userData);

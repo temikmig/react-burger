@@ -4,7 +4,6 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 
 import OrderCard from '../../../components/order-card/order-card';
 
-
 export const ProfilePageOrders = () => {
     return(
         <>

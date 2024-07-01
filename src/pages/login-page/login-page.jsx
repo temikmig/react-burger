@@ -7,8 +7,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { loginUser } from '../../services/actions/user-data';
 import { getUserData } from '../../services/actions/user-data';
 
-import AppHeader from '../../components/app-header/app-header';
-
 export const LoginPage = () => {
     const { userLoggedIn, isError } = useSelector(store => store.userData);
 
@@ -61,7 +59,6 @@ export const LoginPage = () => {
 
     return (
         <>
-            <AppHeader />
             <main className={css.pageMain}>
                 <section className={css.pageSection}>
                     <form onSubmit={submitLoginUser}>

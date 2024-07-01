@@ -17,6 +17,7 @@ import { ProtectedRouteElement } from '../protected-route';
 
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import Modal from '../modal/modal';
+import AppHeader from '../app-header/app-header';
 
 const App = () => {
     // const dispatch = useDispatch();
@@ -30,6 +31,7 @@ const App = () => {
 
     return (
         <>
+            <AppHeader />
             <Routes location={background || location}>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/login" element={<LoginPage />} />

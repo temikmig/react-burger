@@ -1,23 +1,17 @@
-import React, { useState, useRef } from 'react';
+import React from 'react';
 import css from './profile-page.module.css';
-import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import AppHeader from '../../components/app-header/app-header';
 import ProfileNavigation from '../../components/profile-navigation/profile-navigation';
 
 import { ProfilePageMain } from './profile-page-main/profile-page-main';
 import { ProfilePageOrders } from './profile-page-orders/profile-page-orders';
 import { LogoutPage } from './profile-logout';
 
-import { useRoutes } from 'react-router-dom';
-import { BrowserRouter, Routes, Route, useLocation, Navigate} from 'react-router-dom';
-
-import { NotFound404 } from '../../pages';
+import { Routes, Route, Navigate} from 'react-router-dom';
 
 export const ProfilePage = () => {
     return(
         <>
-            <AppHeader />
             <main className={css.pageMain}>
                 <nav className={css.pageNav}>
                     <ProfileNavigation />

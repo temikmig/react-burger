@@ -6,8 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-import AppHeader from '../../components/app-header/app-header';
-
 import { getUserData, forgotPassword } from '../../services/actions/user-data';
 
 export const ForgotPasswordPage = () => {
@@ -57,7 +55,6 @@ export const ForgotPasswordPage = () => {
 
     return(
         <>
-            <AppHeader />
             <main className={css.pageMain}>
                 <section className={css.pageSection}>
                     <h1 className={css.pageHeader}>Восстановление пароля</h1>

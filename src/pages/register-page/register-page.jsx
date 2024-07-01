@@ -4,7 +4,6 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-import AppHeader from '../../components/app-header/app-header';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { registerUser, getUserData } from '../../services/actions/user-data';
@@ -67,7 +66,6 @@ export const RegisterPage = () => {
 
     return(
         <>
-            <AppHeader />
             <main className={css.pageMain}>
                 <section className={css.pageSection}>
                     <h1 className={css.pageHeader}>Регистрация</h1>
