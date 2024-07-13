@@ -2,3 +2,8 @@
     text-align: center;
     composes: input__error text_type_main-default from global;
 }
+
+.pageSectionLink {
+    text-decoration: none;
+    composes: button_type_secondary from global;
+}

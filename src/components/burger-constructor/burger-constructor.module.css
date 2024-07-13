@@ -50,10 +50,10 @@
 }
 
 .BurderIngredientsEmpty {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #686879;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #686879 !important;
     composes: constructor-element from global;
 }
 
