@@ -43,8 +43,8 @@ const BurgerConstructor: FC = () => {
         dispatch(clearIngredients());
     }
 
-    const orderPriceVal:any = useSelector<any>(store => {
-        let priceVal = 0;
+    const orderPriceVal:number = useSelector(store => {
+        let priceVal:number = 0;
 
         if(currentBun) priceVal = priceVal + currentBun.price*2;
 

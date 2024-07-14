@@ -19,7 +19,7 @@ export const clearIngredients = () => ({
     type: CLEAR_INGREDIENTS,
 });
 
-export const moveIngredients = (toIndex:any, fromIndex?:any) => ({
+export const moveIngredients = ({toIndex, fromIndex}:any) => ({
     type: MOVE_INGREDIENTS,
     payload: {toIndex, fromIndex}
 });

@@ -28,7 +28,7 @@ export const ForgotPasswordPage:FC = () => {
         setSubmitFlag(false);
     }
 
-    const submitForgotPassword = (e:FormEvent) => {
+    const submitForgotPassword = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(resetEmail==="") return false;

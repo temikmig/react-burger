@@ -41,7 +41,7 @@ export const RegisterPage = () => {
         setSubmitFlag(false);
     }
 
-    const submitRegistrationUser = (e:FormEvent) => {
+    const submitRegistrationUser = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(regName==='') return false;

@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, MouseEvent } from 'react';
 import { useCallback, useEffect } from 'react';
 import css from './modal.module.css';
 
@@ -13,7 +13,7 @@ const Modal:FC<TModalProps> = ( { cont, header='', handleCloseThis } ) => {
     }, [handleCloseThis]);
 
     useEffect(() => {
-        const closeModalByEsc = (e:any) => {
+        const closeModalByEsc = (e:KeyboardEvent) => {
           e.key === "Escape" && handleCloseModal();
         };
         document.addEventListener("keydown", closeModalByEsc);
@@ -25,7 +25,7 @@ const Modal:FC<TModalProps> = ( { cont, header='', handleCloseThis } ) => {
 
     return(
         <ModalOverlay handleCloseOut={handleCloseModal}>
-            <div className={css.modalWin} onClick={e => e.stopPropagation()}>
+            <div className={css.modalWin} onClick={(e:MouseEvent) => e.stopPropagation()}>
                 <h1 className={header!==''?css.modalHeader:css.modalHeaderNoHeader}>{ header }<div onClick={handleCloseModal} className={css.modalCloseButton}><CloseIcon type="primary" /></div></h1>
                 { cont }
             </div>

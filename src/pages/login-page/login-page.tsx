@@ -33,7 +33,7 @@ export const LoginPage:FC = () => {
         setSubmitFlag(false);
     }
 
-    const submitLoginUser = (e:FormEvent) => {
+    const submitLoginUser = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(loginEmail==='') return false; 

@@ -25,7 +25,6 @@ const IngredientDetails:FC = () => {
       dispatch(getIngredientsList());
     },[dispatch]);
 
-    // const ingredientData = useSelector(store => store.ingredientDetails.ingredientData);
     const { id } = useParams();
 
     const { data, isLoad, isError } = useSelector((store:TIngredientsList) => store.ingredientsList);

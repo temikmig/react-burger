@@ -46,7 +46,7 @@ export const ProfilePageMain:FC = () => {
         setChangeDataFlag(true);
     }
 
-    const saveProfileChange = (e:FormEvent) => {
+    const saveProfileChange = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(profileName==="") setProfileNameError(true);

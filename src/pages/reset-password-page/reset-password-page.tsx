@@ -34,7 +34,7 @@ export const ResetPasswordPage = () => {
         setSubmitFlag(false);
     }
 
-    const submitResetPassword = (e:FormEvent) => {
+    const submitResetPassword = (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if(newPassword==="") return false;
