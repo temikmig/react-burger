@@ -1,313 +1,424 @@
 import { BASE_URL } from "../../utils/config";
-import { AppDispatch, TUserAuth, TUserData, TUserForgotPassword, TUserPatch, TUserRegistration, TUserResetPassword } from "../../utils/types";
+import { TUserAuth, TUserData, TUserForgotPassword, TUserPatch, TUserRegistration, TUserResetPassword } from "../../utils/types";
 import { setCookie, deleteCookie, getCookie, fetchRequest, fetchRequestRefresh } from "../../utils/utils";
 
-export const LOGIN_USER_REQUEST = 'LOGIN_USER_REQUEST';
-export const LOGIN_USER_SUCCESS = 'LOGIN_USER_SUCCESS';
-export const LOGIN_USER_ERROR = 'LOGIN_USER_ERROR';
+import {
+    LOGIN_USER_REQUEST,
+    LOGIN_USER_SUCCESS,
+    LOGIN_USER_ERROR,
 
-export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST';
-export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS';
-export const REGISTER_USER_ERROR = 'REGISTER_USER_ERROR';
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_ERROR,
 
-export const LOGOUT_USER_REQUEST = 'LOGOUT_USER_REQUEST';
-export const LOGOUT_USER_SUCCESS = 'LOGOUT_USER_SUCCESS';
-export const LOGOUT_USER_ERROR = 'LOGOUT_USER_ERROR';
+    LOGOUT_USER_REQUEST,
+    LOGOUT_USER_SUCCESS,
+    LOGOUT_USER_ERROR,
 
-export const GET_USERDATA_REQUEST = 'GET_USERDATA_REQUEST';
-export const GET_USERDATA_SUCCESS = 'GET_USERDATA_SUCCESS';
-export const GET_USERDATA_ERROR = 'GET_USERDATA_ERROR';
+    GET_USERDATA_REQUEST,
+    GET_USERDATA_SUCCESS,
+    GET_USERDATA_ERROR,
 
-export const FORGOT_PASSWORD_REQUEST = 'FORGOT_PASSWORD_REQUEST';
-export const FORGOT_PASSWORD_SUCCESS = 'FORGOT_PASSWORD_SUCCESS';
-export const FORGOT_PASSWORD_ERROR = 'FORGOT_PASSWORD_ERROR';
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_ERROR,
 
-export const RESET_PASSWORD_REQUEST = 'RESET_PASSWORD_REQUEST';
-export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
-export const RESET_PASSWORD_ERROR = 'RESET_PASSWORD_ERROR';
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_ERROR,
 
-export const PATCH_USER_REQUEST = 'PATCH_USER_REQUEST';
-export const PATCH_USER_SUCCESS = 'PATCH_USER_SUCCESS';
-export const PATCH_USER_ERROR = 'PATCH_USER_ERROR';
+    PATCH_USER_REQUEST,
+    PATCH_USER_SUCCESS,
+    PATCH_USER_ERROR
+} from "../constants/user-data";
+import { AppDispatch, AppThunk } from "../types";
 
 // login -----------
-export function loginUser(data:TUserAuth):any {
+export interface ILoginUserRequestAction {
+    readonly type: typeof LOGIN_USER_REQUEST;
+}
+
+export interface ILoginUserSuccessAction {
+    readonly type: typeof LOGIN_USER_SUCCESS;
+    readonly loginData: ReadonlyArray<TUserAuth>;
+}
+
+export interface ILoginUserErrorAction {
+    readonly type: typeof LOGIN_USER_ERROR;
+}
+
+const loginUserRequest = ():ILoginUserRequestAction => ({
+    type: LOGIN_USER_REQUEST
+});
+
+const loginUserSuccess = (loginData:ReadonlyArray<TUserAuth>):ILoginUserSuccessAction => ({
+    type: LOGIN_USER_SUCCESS,
+    loginData
+});
+
+const loginUserError = ():ILoginUserErrorAction => ({
+    type: LOGIN_USER_ERROR
+});
+
+export const loginUser:AppThunk = (data:TUserAuth) => (dispatch:AppDispatch) => {
     const loginData = {
         email: data.email,
         password: data.password
     };
     
-    return function(dispatch:AppDispatch):any {
-        dispatch({
-            type: LOGIN_USER_REQUEST
+    dispatch(loginUserRequest());
+
+    if(data) {
+        fetchRequest(`${BASE_URL}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(loginData)
         })
+        .then(res => {
+            if (res && res.success) {
+                const accessToken = res.accessToken.split('Bearer ')[1];
+                const refreshToken = res.refreshToken;
 
-        if(data) {
-            fetchRequest(`${BASE_URL}/auth/login`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(loginData)
-            })
-            .then(res => {
-                if (res && res.success) {
-                    const accessToken = res.accessToken.split('Bearer ')[1];
-                    const refreshToken = res.refreshToken;
-
-                    if(accessToken) {
-                        setCookie('accessToken', accessToken);
-                        localStorage.setItem('refreshToken', refreshToken);
-                    }
-
-                    dispatch({
-                         type: LOGIN_USER_SUCCESS,
-                         payload: res
-                    });
-                } else {
-                    dispatch({
-                        type: LOGIN_USER_ERROR
-                    })
+                if(accessToken) {
+                    setCookie('accessToken', accessToken);
+                    localStorage.setItem('refreshToken', refreshToken);
                 }
-            })
-            .catch( err => {
-                dispatch({
-                    type: LOGIN_USER_ERROR
-                })
-            });
-        } else dispatch({
-            type: LOGIN_USER_ERROR
+
+                dispatch(loginUserSuccess(res));
+            } else dispatch(loginUserError());
+        })
+        .catch(err => {
+            dispatch(loginUserError())
         });
-    }
+    } else dispatch(loginUserError());
 }
 
 // register -----------
-export function registerUser(data:TUserRegistration):any {
+export interface IRegisterUserRequestAction {
+    readonly type: typeof REGISTER_USER_REQUEST;
+}
+
+export interface IRegisterUserSuccessAction {
+    readonly type: typeof REGISTER_USER_SUCCESS;
+    readonly registerData: ReadonlyArray<TUserRegistration>;
+}
+
+export interface IRegisterUserErrorAction {
+    readonly type: typeof REGISTER_USER_ERROR;
+}
+
+const registerUserRequest = ():IRegisterUserRequestAction => ({
+    type: REGISTER_USER_REQUEST
+});
+
+const registerUserSuccess = (registerData:ReadonlyArray<TUserRegistration>):IRegisterUserSuccessAction => ({
+    type: REGISTER_USER_SUCCESS,
+    registerData
+});
+
+const registerUserError = ():IRegisterUserErrorAction => ({
+    type: REGISTER_USER_ERROR
+});
+
+export const registerUser:AppThunk = (data:TUserRegistration) => (dispatch:AppDispatch) => {
     const registerData = {
         email: data.email,
         password: data.password,
         name: data.name,
     };
     
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: REGISTER_USER_REQUEST
+    dispatch(registerUserRequest());
+
+    if(data) {
+        fetchRequest(`${BASE_URL}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(registerData)
         })
+        .then(res => {
+            if (res && res.success) {
+                const accessToken = res.accessToken.split('Bearer ')[1];
+                const refreshToken = res.refreshToken;
 
-        if(data) {
-            fetchRequest(`${BASE_URL}/auth/register`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(registerData)
-            })
-            .then(res => {
-                if(res && res.success) {
-                    const accessToken = res.accessToken.split('Bearer ')[1];
-                    const refreshToken = res.refreshToken;
-
-                    if(accessToken) {
-                        setCookie('accessToken', accessToken, { expires: 20*60 });
-                        localStorage.setItem('refreshToken', refreshToken);
-                    }
-
-                    dispatch({
-                        type: REGISTER_USER_SUCCESS,
-                        payload: res
-                    });
-                } else {
-                    dispatch({
-                        type: REGISTER_USER_ERROR
-                    })
+                if (accessToken) {
+                    setCookie('accessToken', accessToken, { expires: 20 * 60 });
+                    localStorage.setItem('refreshToken', refreshToken);
                 }
-            })
-            .catch( err => {
-                dispatch({
-                    type: REGISTER_USER_ERROR
-                })
-            });
-        } else dispatch({
-            type: REGISTER_USER_ERROR
+
+                dispatch(registerUserSuccess(res));
+            } else dispatch(registerUserError());
+        })
+        .catch(err => {
+            dispatch(registerUserError());
         });
-    }
+    } else dispatch(registerUserError());
 }
 
 // logout -----------
-export function logoutUser():any {
+export interface ILogoutUserRequestAction {
+    readonly type: typeof LOGOUT_USER_REQUEST;
+}
+
+export interface ILogoutUserSuccessAction {
+    readonly type: typeof LOGOUT_USER_SUCCESS;
+}
+
+export interface ILogoutUserErrorAction {
+    readonly type: typeof LOGOUT_USER_ERROR;
+}
+
+const logoutUserRequest = ():ILogoutUserRequestAction => ({
+    type: LOGOUT_USER_REQUEST
+});
+
+const logoutUserSuccess = ():ILogoutUserSuccessAction => ({
+    type: LOGOUT_USER_SUCCESS
+});
+
+const logoutUserError = ():ILogoutUserErrorAction => ({
+    type: LOGOUT_USER_ERROR
+});
+
+export const logoutUser:AppThunk = () => (dispatch:AppDispatch) => {
     const refreshToken = localStorage.getItem('refreshToken');
 
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: LOGOUT_USER_REQUEST
-        })
+    dispatch(logoutUserRequest());
 
-        localStorage.removeItem('refreshToken');
-        deleteCookie('accessToken');
+    localStorage.removeItem('refreshToken');
+    deleteCookie('accessToken');
 
-        fetchRequest(`${BASE_URL}/auth/logout`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({token: refreshToken})
-        })
-        .then(res => {
-            if (res && res.success) {            
-                dispatch({
-                    type: LOGOUT_USER_SUCCESS
-                });
-            } else {
-                dispatch({
-                    type: LOGOUT_USER_ERROR
-                })
-            }
-        })
-        .catch( err => {
-            dispatch({
-                type: LOGOUT_USER_ERROR
-            })
-        });
-    }
+    fetchRequest(`${BASE_URL}/auth/logout`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({token: refreshToken})
+    })
+    .then(res => {
+        if(res && res.success) dispatch(logoutUserSuccess());
+        else dispatch(logoutUserError());
+    })
+    .catch( err => {
+        dispatch(logoutUserError());
+    });
 }
 
 // userdata -------------
-export function getUserData():any {    
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: GET_USERDATA_REQUEST
+export interface IGetUserDataRequestAction {
+    readonly type: typeof GET_USERDATA_REQUEST;
+}
+
+export interface IGetUserDataSuccessAction {
+    readonly type: typeof GET_USERDATA_SUCCESS;
+    readonly userData: ReadonlyArray<TUserData>;
+}
+
+export interface IGetUserDataErrorAction {
+    readonly type: typeof GET_USERDATA_ERROR;
+}
+
+const getUserDataRequest = ():IGetUserDataRequestAction => ({
+    type: GET_USERDATA_REQUEST
+});
+
+const getUserDataSuccess = (userData:ReadonlyArray<TUserData>):IGetUserDataSuccessAction => ({
+    type: GET_USERDATA_SUCCESS,
+    userData
+});
+
+const getUserDataError = ():IGetUserDataErrorAction => ({
+    type: GET_USERDATA_ERROR
+});
+
+export const getUserData:AppThunk = () => (dispatch:AppDispatch) => {
+    dispatch(getUserDataRequest());
+
+    const accessToken = getCookie('accessToken');
+
+    if(accessToken) {
+        fetchRequestRefresh(`${BASE_URL}/auth/user`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: 'Bearer '+accessToken
+            }
         })
-
-        const accessToken = getCookie('accessToken');
-
-        if(accessToken) {
-            fetchRequestRefresh(`${BASE_URL}/auth/user`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Authorization: 'Bearer '+accessToken
-                }
-            })
-            .then(res => {
-                if (res && res.success) {
-                    dispatch({
-                         type: GET_USERDATA_SUCCESS,
-                         payload: res
-                    });
-                } else {
-                    dispatch({
-                        type: GET_USERDATA_ERROR
-                    })
-                }
-            })
-            .catch( err => {
-                dispatch({
-                    type: GET_USERDATA_ERROR
-                });
-            });
-        } else dispatch({
-            type: GET_USERDATA_ERROR
+        .then(res => {
+            if(res && res.success) dispatch(getUserDataSuccess(res));
+            else dispatch(getUserDataError());
+        })
+        .catch( err => {
+            dispatch(getUserDataError());
         });
-    }
+    } else dispatch(getUserDataError());
 }
 
 // forgot password -----------
-export function forgotPassword(data:TUserForgotPassword):any {
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: FORGOT_PASSWORD_REQUEST
-        })
+export interface IForgotPasswordRequestAction {
+    readonly type: typeof FORGOT_PASSWORD_REQUEST;
+}
 
-        fetchRequest(`${BASE_URL}/password-reset`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({email: data.email})
-        })
-        .then(res => {
-            if (res && res.success) {            
-                dispatch({
-                    type: FORGOT_PASSWORD_SUCCESS,
-                    payload: res
-                });
-            } else {
-                dispatch({
-                    type: FORGOT_PASSWORD_ERROR
-                })
-            }
-        })
-        .catch( err => {
-            dispatch({
-                type: FORGOT_PASSWORD_ERROR
-            })
-        });
-    }
+export interface IForgotPasswordSuccessAction {
+    readonly type: typeof FORGOT_PASSWORD_SUCCESS;
+    readonly forgotPasswordData: ReadonlyArray<TUserForgotPassword>;
+}
+
+export interface IForgotPasswordErrorAction {
+    readonly type: typeof FORGOT_PASSWORD_ERROR;
+}
+
+const forgotPasswordRequest = ():IForgotPasswordRequestAction => ({
+    type: FORGOT_PASSWORD_REQUEST
+});
+
+const forgotPasswordSuccess = (forgotPasswordData:ReadonlyArray<TUserForgotPassword>):IForgotPasswordSuccessAction => ({
+    type: FORGOT_PASSWORD_SUCCESS,
+    forgotPasswordData
+});
+
+const forgotPasswordError = ():IForgotPasswordErrorAction => ({
+    type: FORGOT_PASSWORD_ERROR
+});
+
+export const forgotPassword:AppThunk = (data:TUserForgotPassword) => (dispatch:AppDispatch) => {
+    dispatch(forgotPasswordRequest());
+
+    fetchRequest(`${BASE_URL}/password-reset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({email: data.email})
+    })
+    .then(res => {
+        if(res && res.success) dispatch(forgotPasswordSuccess(res));
+        else dispatch(forgotPasswordError());
+    })
+    .catch( err => {
+        dispatch(forgotPasswordError());
+    });
 }
 
 // reset password -----------
-export function resetPassword(data:TUserResetPassword):any {
+export interface IResetPasswordRequestAction {
+    readonly type: typeof RESET_PASSWORD_REQUEST;
+}
+
+export interface IResetPasswordSuccessAction {
+    readonly type: typeof RESET_PASSWORD_SUCCESS;
+    readonly resetPasswordData: ReadonlyArray<TUserResetPassword>;
+}
+
+export interface IResetPasswordErrorAction {
+    readonly type: typeof RESET_PASSWORD_ERROR;
+}
+
+const resetPasswordRequest = ():IResetPasswordRequestAction => ({
+    type: RESET_PASSWORD_REQUEST
+});
+
+const resetPasswordSuccess = (resetPasswordData:ReadonlyArray<TUserResetPassword>):IResetPasswordSuccessAction => ({
+    type: RESET_PASSWORD_SUCCESS,
+    resetPasswordData
+});
+
+const resetPasswordError = ():IResetPasswordErrorAction => ({
+    type: RESET_PASSWORD_ERROR
+});
+
+export const resetPassword:AppThunk = (data:TUserResetPassword) => (dispatch:AppDispatch) => {
     const resetPasswordData = {
         password: data.password,
         token: data.token
     }
 
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: RESET_PASSWORD_REQUEST
-        })
+    dispatch(resetPasswordRequest());
 
-        fetchRequest(`${BASE_URL}/password-reset/reset`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(resetPasswordData)
-        })
-        .then(res => {
-            if (res && res.success) {            
-                dispatch({
-                    type: RESET_PASSWORD_SUCCESS,
-                    payload: res
-                });
-            } else {
-                dispatch({
-                    type: RESET_PASSWORD_ERROR
-                })
-            }
-        })
-        .catch( err => {
-            dispatch({
-                type: RESET_PASSWORD_ERROR
-            })
-        });
-    }
+    fetchRequest(`${BASE_URL}/password-reset/reset`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(resetPasswordData)
+    })
+    .then(res => {
+        if(res && res.success) dispatch(resetPasswordSuccess(res));
+        else dispatch(resetPasswordError());
+    })
+    .catch(err => {
+        dispatch(resetPasswordError());
+    });
 }
 
 // patch user -----------
-export function patchUser(data:TUserPatch):any {
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: PATCH_USER_REQUEST
-        })
-
-        const accessToken = getCookie('accessToken');
-        const refreshToken = localStorage.getItem('refreshToken');
-
-        fetchRequestRefresh(`${BASE_URL}/auth/user`, {
-            method: 'PATCH',
-            headers: { 
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer '+accessToken
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res => {
-            if (res && res.success) {            
-                dispatch({
-                    type: PATCH_USER_SUCCESS,
-                    payload: res
-                });
-            } else {
-                dispatch({
-                    type: PATCH_USER_ERROR
-                })
-            }
-        })
-        .catch( err => {
-            dispatch({
-                type: PATCH_USER_ERROR
-            });
-        });
-    }
+export interface IPatchUserRequestAction {
+    readonly type: typeof PATCH_USER_REQUEST;
 }
+
+export interface IPatchUserSuccessAction {
+    readonly type: typeof PATCH_USER_SUCCESS;
+    readonly patchPasswordData: ReadonlyArray<TUserPatch>;
+}
+
+export interface IPatchUserErrorAction {
+    readonly type: typeof PATCH_USER_ERROR;
+}
+
+const patchPasswordRequest = ():IPatchUserRequestAction => ({
+    type: PATCH_USER_REQUEST
+});
+
+const patchPasswordSuccess = (patchPasswordData:ReadonlyArray<TUserPatch>):IPatchUserSuccessAction => ({
+    type: PATCH_USER_SUCCESS,
+    patchPasswordData
+});
+
+const patchPasswordError = ():IPatchUserErrorAction => ({
+    type: PATCH_USER_ERROR
+});
+
+export const patchUser:AppThunk = (data:TUserPatch) => (dispatch:AppDispatch) => {
+    dispatch(patchPasswordRequest());
+
+    const accessToken = getCookie('accessToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+
+    fetchRequestRefresh(`${BASE_URL}/auth/user`, {
+        method: 'PATCH',
+        headers: { 
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer '+accessToken
+        },
+        body: JSON.stringify(data)
+    })
+    .then(res => {
+        if(res && res.success) dispatch(patchPasswordSuccess(res));
+        else dispatch(patchPasswordError());
+    })
+    .catch(err => {
+        dispatch(patchPasswordError());
+    });
+}
+
+export type TUserDataActions =
+  | ILoginUserRequestAction
+  | ILoginUserSuccessAction
+  | ILoginUserErrorAction
+
+  | IRegisterUserRequestAction
+  | IRegisterUserSuccessAction
+  | IRegisterUserErrorAction
+
+  | ILogoutUserRequestAction
+  | ILogoutUserSuccessAction
+  | ILogoutUserErrorAction
+
+  | IGetUserDataRequestAction
+  | IGetUserDataSuccessAction
+  | IGetUserDataErrorAction
+
+  | IForgotPasswordRequestAction
+  | IForgotPasswordSuccessAction
+  | IForgotPasswordErrorAction
+  
+  | IResetPasswordRequestAction
+  | IResetPasswordSuccessAction
+  | IResetPasswordErrorAction
+
+  | IPatchUserRequestAction
+  | IPatchUserSuccessAction
+  | IPatchUserErrorAction;

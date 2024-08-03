@@ -1,14 +1,30 @@
 import { TIngredient } from "../../utils/types";
 
-export const ADD_INGREDIENT_DETAILS_MODAL = 'ADD_INGREDIENT_DETAILS_MODAL';
-export const DEL_INGREDIENT_DETAILS_MODAL = 'DEL_INGREDIENT_DETAILS_MODAL';
+import {
+    ADD_INGREDIENT_DETAILS_MODAL,
+    DEL_INGREDIENT_DETAILS_MODAL
+} from "../constants/burger-ingredient-details";
 
-export const addIngredientDetailsModal = (ingredient:any) => ({
+export interface IAddIngredientDetailsAction {
+    readonly type: typeof ADD_INGREDIENT_DETAILS_MODAL;
+    readonly ingredient: TIngredient;
+}
+
+export interface IDelIngredientDetailsAction {
+    readonly type: typeof DEL_INGREDIENT_DETAILS_MODAL;
+    _id: string;
+}
+
+export const addIngredientDetailsModal = (ingredient:TIngredient):IAddIngredientDetailsAction => ({
     type: ADD_INGREDIENT_DETAILS_MODAL,
-    payload: ingredient
+    ingredient
 });
 
-export const delIngredientDetailsModal = (_id:any) => ({
+export const delIngredientDetailsModal = (_id:string):IDelIngredientDetailsAction => ({
     type: DEL_INGREDIENT_DETAILS_MODAL,
-    payload: _id
+    _id
 });
+
+export type TIngredientDetailsActions =
+  | IAddIngredientDetailsAction
+  | IDelIngredientDetailsAction;

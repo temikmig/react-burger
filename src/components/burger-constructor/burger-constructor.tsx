@@ -6,7 +6,7 @@ import { Button, ConstructorElement, CurrencyIcon} from '@ya.praktikum/react-dev
 import { addIngredient, clearIngredients, moveIngredients } from "../../services/actions/burger-constructor";
 
 import { getOrder } from "../../services/actions/burger-order";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 
 import { useDrop } from 'react-dnd';
 
@@ -19,15 +19,16 @@ import uuid from 'react-uuid';
 
 import { useNavigate } from 'react-router-dom';
 
-import { AppDispatch, TIngredient, TReadyBun, TReadyIngredients, TUserData } from '../../utils/types';
+import { TIngredient, TReadyBun, TReadyIngredients, TUserData } from '../../utils/types';
 
 const BurgerConstructor: FC = () => {
+    const uid = uuid();
     const navigate = useNavigate();
-    const currentBun = useSelector((store:TReadyBun) => store.burgerConstructor.bun);
-    const ingredients = useSelector((store:TReadyIngredients) => store.burgerConstructor.ingredients);
-    const { userLoggedIn } = useSelector((store:TUserData) => store.userData);
+    const currentBun = useSelector((store) => store.burgerConstructor.bun);
+    const ingredients = useSelector((store) => store.burgerConstructor.ingredients);
+    const { userLoggedIn } = useSelector((store) => store.userData);
 
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -43,7 +44,7 @@ const BurgerConstructor: FC = () => {
         dispatch(clearIngredients());
     }
 
-    const orderPriceVal:number = useSelector(store => {
+    const orderPriceVal:number = useSelector((store) => {
         let priceVal:number = 0;
 
         if(currentBun) priceVal = priceVal + currentBun.price*2;
@@ -56,20 +57,16 @@ const BurgerConstructor: FC = () => {
     const [{isHover}, constructorDropRef] = useDrop({
         accept: "constructorContainer",
         drop(item:TIngredient) {
-            dispatch(addIngredient({
-                ingredient: {...item, uid: uuid()}
-            }));
+            dispatch(addIngredient({...item, uid: uuid()}));
         },
+        
         collect: monitor => ({
             isHover: monitor.isOver()
         }),
     });
 
     const moveIngredient = useCallback((toIndex:number, fromIndex:number) => {
-        dispatch(moveIngredients({
-            toIndex: toIndex,
-            fromIndex: fromIndex
-        }));
+        dispatch(moveIngredients(toIndex, fromIndex));
     }, [dispatch])
 
     const renderIngredients = useCallback((currentIngredient:TIngredient, index:number) => {

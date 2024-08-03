@@ -1,9 +1,14 @@
-import { IActionTypes } from '../../utils/interfaces';
+import { TIngredient } from '../../utils/types';
 import { 
     GET_INGREDIENTS_LIST_REQUEST, 
     GET_INGREDIENTS_LIST_SUCCESS, 
     GET_INGREDIENTS_LIST_ERROR 
-} from '../actions/burger-ingredients-list';
+} from '../constants/burger-ingredients-list';
+
+export interface IActionTypes {
+    ingredients: TIngredient[];
+    type: string;
+}
 
 interface IIngredientsList {
     data: any;
@@ -17,11 +22,11 @@ const initialState:IIngredientsList = {
     isError: false
 };
 
-export const ingredientsList = (state = initialState, action:IActionTypes) => { 
+export const ingredientsListReducer = (state = initialState, action:IActionTypes) => { 
     switch (action.type) {
         case GET_INGREDIENTS_LIST_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.ingredients,
             isLoad: false,
             isError: false
         }

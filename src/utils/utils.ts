@@ -1,5 +1,5 @@
 import { BASE_URL } from "./config";
-import { TTokens } from "./types";
+import { TFeed, TFeedItem, TFeedItemMap, TFeedMap, TIngredient, TTokens } from "./types";
 
 export const checkResponse = (res:Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
@@ -63,4 +63,21 @@ export async function fetchRequestRefresh(url:string, options?:any) {
       });
     } else return Promise.reject(err);
   }
+}
+
+
+export const mapFeedItems = (feed: any, ingredients: readonly TIngredient[]): any => {
+    let order = {
+      _id: feed.orders._id,
+      status: feed.orders.status,
+      number: feed.orders.number,
+      createdAt: feed.orders.createdAt,
+      updatedAt: feed.orders.updatedAt,
+      name: feed.orders.name,
+      ingredients: feed.orders.ingredients.map((id:string) => {
+        const ingredient = ingredients.filter(ing => ing._id === id)[0];
+        return { ...ingredient };
+      })
+    }
+    return order;
 }

@@ -1,34 +1,55 @@
 import { BASE_URL } from "../../utils/config";
-import { AppDispatch } from "../../utils/types";
 import { fetchRequest } from "../../utils/utils";
+import { AppDispatch, AppThunk } from "../types";
 
-export const GET_INGREDIENTS_LIST_REQUEST = 'GET_INGREDIENTS_LIST_REQUEST';
-export const GET_INGREDIENTS_LIST_SUCCESS = 'GET_INGREDIENTS_LIST_SUCCESS';
-export const GET_INGREDIENTS_LIST_ERROR = 'GET_INGREDIENTS_LIST_ERROR';
+import {
+    GET_INGREDIENTS_LIST_REQUEST,
+    GET_INGREDIENTS_LIST_SUCCESS,
+    GET_INGREDIENTS_LIST_ERROR
+} from "../constants/burger-ingredients-list";
 
-export function getIngredientsList():any {
-    return function(dispatch:AppDispatch) {
-        dispatch({
-            type: GET_INGREDIENTS_LIST_REQUEST
-        })
-            
-        fetchRequest(`${BASE_URL}/ingredients`)
-        .then(res => {
-            if (res && res.success) {
-                dispatch({
-                    type: GET_INGREDIENTS_LIST_SUCCESS,
-                    payload: res
-                })
-            } else {
-                dispatch({
-                    type: GET_INGREDIENTS_LIST_ERROR
-                })
-            }
-        })
-        .catch( err => {
-            dispatch({
-                type: GET_INGREDIENTS_LIST_ERROR
-            })
-        });
-    }
+import { TIngredient } from "../../utils/types";
+
+export interface IGetIngredientsListRequestAction {
+    readonly type: typeof GET_INGREDIENTS_LIST_REQUEST;
 }
+
+export interface IGetIngredientsListSuccessAction {
+    readonly type: typeof GET_INGREDIENTS_LIST_SUCCESS;
+    readonly ingredients: ReadonlyArray<TIngredient>;
+}
+
+export interface IGetIngredientsListErrorAction {
+    readonly type: typeof GET_INGREDIENTS_LIST_ERROR;
+}
+
+const getIngredientsListRequest = ():IGetIngredientsListRequestAction => ({
+    type: GET_INGREDIENTS_LIST_REQUEST
+});
+
+const getIngredientsListSuccess = (ingredients:ReadonlyArray<TIngredient>):IGetIngredientsListSuccessAction => ({
+    type: GET_INGREDIENTS_LIST_SUCCESS,
+    ingredients
+});
+
+const getIngredientsListError = ():IGetIngredientsListErrorAction => ({
+    type: GET_INGREDIENTS_LIST_ERROR
+});
+
+export const getIngredientsList:AppThunk = () => (dispatch:AppDispatch) => {
+    dispatch(getIngredientsListRequest());
+
+    fetchRequest(`${BASE_URL}/ingredients`)
+    .then(res => {
+        if (res && res.success) dispatch(getIngredientsListSuccess(res));
+        else dispatch(getIngredientsListError());
+    })
+    .catch(err => {
+        dispatch(getIngredientsListError());
+    });
+}
+
+export type TGetIngredientsListActions =
+  | IGetIngredientsListRequestAction
+  | IGetIngredientsListSuccessAction
+  | IGetIngredientsListErrorAction;

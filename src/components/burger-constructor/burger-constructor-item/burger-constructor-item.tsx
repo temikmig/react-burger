@@ -2,16 +2,16 @@ import React, { FC } from 'react';
 import css from './burger-constructor-item.module.css';
 import PropTypes from 'prop-types';
 import { ConstructorElement, DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'; 
-import { useDispatch } from "react-redux";
+import { useDispatch } from "../../../services/types/hooks";
 import { delIngredient } from "../../../services/actions/burger-constructor";
 
 import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 
-import { AppDispatch, TBurgerConstructorItemProps, TIngredient } from '../../../utils/types';
+import { TBurgerConstructorItemProps, TIngredient } from '../../../utils/types';
 
 const BurgerConstructorItem:FC<TBurgerConstructorItemProps> = ( {currentIngredient, index, moveIngredient} ) => {
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const ref = useRef<HTMLDivElement>(null);
 
     const [{ handlerId }, drop] = useDrop({
@@ -57,7 +57,7 @@ const BurgerConstructorItem:FC<TBurgerConstructorItemProps> = ( {currentIngredie
                 text={currentIngredient.name}
                 price={currentIngredient.price}
                 thumbnail={currentIngredient.image}
-                handleClose={() => dispatch(delIngredient({uid: currentIngredient.uid}))}
+                handleClose={() => dispatch(delIngredient(currentIngredient.uid))}
             />
         </div>
     )

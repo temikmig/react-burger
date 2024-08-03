@@ -1,0 +1,55 @@
+.ingredientItem {
+    display: flex;
+    align-items: center;
+    composes: mb-4 from global;
+}
+
+.ingredientItem:last-child {
+    margin-bottom: 0;
+}
+
+.ingredientImage {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#801AB2, #4C4CFF);
+    position: relative;
+}
+
+.ingredientImage:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #000;
+    z-index: 4;
+}
+
+.ingredientImage img {
+    height: 56px;
+    z-index: 5;
+}
+
+.ingredientInfo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: auto;
+    composes: ml-4 from global;
+}
+
+.ingredientInfoName {
+    composes: text text_type_main-default from global;
+}
+
+.ingredientInfoPrice {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    composes: text text_type_digits-default ml-4 from global;
+}

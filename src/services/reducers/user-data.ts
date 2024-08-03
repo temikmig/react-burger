@@ -1,3 +1,4 @@
+import { TUserAuth, TUserData, TUserForgotPassword, TUserPatch, TUserRegistration, TUserResetPassword } from '../../utils/types';
 import { 
     LOGIN_USER_SUCCESS, 
     LOGIN_USER_REQUEST, 
@@ -26,11 +27,19 @@ import {
     PATCH_USER_SUCCESS,
     PATCH_USER_REQUEST,
     PATCH_USER_ERROR
-} from '../actions/user-data';
+} from '../constants/user-data';
 
-import { IActionTypes } from '../../utils/interfaces';
+export interface IActionTypes {
+    loginData: TUserAuth;
+    registerData: TUserRegistration;
+    userData: TUserData
+    forgotPasswordData: TUserForgotPassword;
+    resetPasswordData: TUserResetPassword;
+    patchPasswordData: TUserPatch;
+    type: string;
+}
 
-interface IBurgerOrder {
+interface IUserData {
     data: any,
     isLoad: boolean,
     isError: boolean,
@@ -39,7 +48,7 @@ interface IBurgerOrder {
     isResetPassword: boolean
 }
 
-const initialState = {
+const initialState:IUserData = {
     data: [],
     isLoad: false,
     isError: false,
@@ -48,12 +57,12 @@ const initialState = {
     isResetPassword: false
 };
 
-export const userData = (state = initialState, action:IActionTypes) => { 
+export const userDataReducer = (state = initialState, action:IActionTypes) => { 
     switch (action.type) {
         //login------
         case LOGIN_USER_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.loginData,
             isLoad: false,
             isError: false, 
             userLoggedIn: true
@@ -76,7 +85,7 @@ export const userData = (state = initialState, action:IActionTypes) => {
         //register ------
         case REGISTER_USER_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.registerData,
             isLoad: false,
             isError: false, 
             userLoggedIn: true
@@ -100,7 +109,7 @@ export const userData = (state = initialState, action:IActionTypes) => {
         //logout ----------
         case LOGOUT_USER_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: [],
             isLoad: false,
             isError: false, 
             userLoggedIn: false
@@ -124,7 +133,7 @@ export const userData = (state = initialState, action:IActionTypes) => {
         //userdata------
         case GET_USERDATA_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.userData,
             isLoad: false,
             isError: false, 
             userLoggedIn: true
@@ -148,7 +157,7 @@ export const userData = (state = initialState, action:IActionTypes) => {
         //forgot-password ------
         case FORGOT_PASSWORD_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.forgotPasswordData,
             isLoad: false,
             isError: false,
             isForgotPassword: true
@@ -171,7 +180,7 @@ export const userData = (state = initialState, action:IActionTypes) => {
         //reset-password ------
         case RESET_PASSWORD_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.resetPasswordData,
             isLoad: false,
             isError: false,
             isForgotPassword: false,
@@ -195,7 +204,7 @@ export const userData = (state = initialState, action:IActionTypes) => {
         //patch user ------
         case PATCH_USER_SUCCESS: return { 
             ...state, 
-            data: action.payload,
+            data: action.patchPasswordData,
             isLoad: false,
             isError: false
         }

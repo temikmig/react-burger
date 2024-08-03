@@ -2,17 +2,16 @@ import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import css from '../login-page/login-page.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/types/hooks";
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { getUserData, resetPassword } from '../../services/actions/user-data';
-import { AppDispatch, TUserData } from '../../utils/types';
 
 export const ResetPasswordPage = () => {
-    const { userLoggedIn, isForgotPassword, isResetPassword, isError } = useSelector((store:TUserData) => store.userData);
+    const { userLoggedIn, isForgotPassword, isResetPassword, isError } = useSelector((store) => store.userData);
 
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 

@@ -3,10 +3,11 @@ import {
     DEL_INGREDIENT, 
     CLEAR_INGREDIENTS, 
     MOVE_INGREDIENTS 
-} from '../actions/burger-constructor';
+} from '../constants/burger-constructor';
 
 import { IActionTypes } from '../../utils/interfaces';
 import { TIngredient } from '../../utils/types';
+import { TIngredientsActions } from '../actions/burger-constructor';
 
 interface IBurgerConstructor {
     bun: any;
@@ -18,23 +19,23 @@ const initialState:IBurgerConstructor = {
     ingredients: []
 };
 
-export const burgerConstructor = (state = initialState, action:IActionTypes) => { 
+export const burgerConstructorReducer = (state = initialState, action:TIngredientsActions):IBurgerConstructor => { 
     switch (action.type) {
         case ADD_INGREDIENT: {
-            if(action.payload.ingredient.type==='bun') {
+            if(action.ingredient.type==='bun') {
                 return {...state, 
-                    bun: action.payload.ingredient
+                    bun: action.ingredient
                 }
             } else {
                 return {...state, 
-                    ingredients: [...state.ingredients, action.payload.ingredient]
+                    ingredients: [...state.ingredients, action.ingredient]
                 }
             }
         }
 
         case DEL_INGREDIENT: {
             return {...state, 
-                ingredients: state.ingredients.filter((item:TIngredient) => action.payload.uid!==item.uid)
+                ingredients: state.ingredients.filter((item:TIngredient) => action.uid!==item.uid)
             }
         }
 
@@ -49,14 +50,14 @@ export const burgerConstructor = (state = initialState, action:IActionTypes) => 
         case MOVE_INGREDIENTS: {
             const ingredients = [...state.ingredients];
 
-            const fromIndex = ((action.payload.fromIndex !== undefined) &&
-                                (action.payload.fromIndex >= 0) && 
-                                (action.payload.fromIndex < ingredients.length)) ?
-                                action.payload.fromIndex : 0;
-            const toIndex = ((action.payload.toIndex !== undefined) &&
-                                  (action.payload.toIndex >= 0) && 
-                                  (action.payload.toIndex < ingredients.length)) ?
-                                 action.payload.toIndex : 0;
+            const fromIndex = ((action.fromIndex !== undefined) &&
+                                (action.fromIndex >= 0) && 
+                                (action.fromIndex < ingredients.length)) ?
+                                action.fromIndex : 0;
+            const toIndex = ((action.toIndex !== undefined) &&
+                                  (action.toIndex >= 0) && 
+                                  (action.toIndex < ingredients.length)) ?
+                                 action.toIndex : 0;
             if(fromIndex !== toIndex){
                 ingredients.splice(toIndex, 0, ingredients.splice(fromIndex, 1)[0]);
                 return {...state,

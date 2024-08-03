@@ -1,5 +1,65 @@
 .orderCardContaiter {
-    height: 160px;
     background: #1C1C21;
     border-radius: 40px;
+    transition: 0.15s;
+    composes: p-6 mb-5 from global;
+}
+
+.orderCardContaiter:hover {
+    background: #2f2f37;
+}
+
+.orderCardContaiter:active {
+    transform: scale(0.95);
+}
+
+.orderCardHead {
+    display: flex;
+    justify-content: space-between;
+    composes: text text_type_main-medium mb-6 from global;
+}
+
+.orderCardNumber {
+    composes: text text_type_digits-default from global;
+}
+
+.orderCardDate {
+    composes: text text_type_main-default text_color_inactive from global;
+}
+
+.orderCardName {
+    composes: text text_type_main-medium mb-2 from global;
+}
+
+.orderCardStatusCreated, .orderCardStatusPending, .orderCardStatusDone {
+    composes: text text_type_main-small mb-6 from global;
+}
+
+.orderCardStatusDone {
+    color: #00cccc;
+}
+
+.orderCardIngredientsCont {
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+}
+
+
+
+.orderCardIngredientsCont {
+
+}
+
+
+.orderCardIngredientsItems {
+    height: 64px;
+    display: flex;
+}
+
+.orderCardPrice {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    composes: text text_type_digits-default from global;
 }

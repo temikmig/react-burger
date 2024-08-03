@@ -2,17 +2,16 @@ import React, { useState, useEffect, FC, ChangeEvent, FormEvent } from 'react';
 import css from '../login-page/login-page.module.css';
 import { EmailInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/types/hooks";
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { getUserData, forgotPassword } from '../../services/actions/user-data';
-import { AppDispatch, TUserData, TUserForgotPassword } from '../../utils/types';
 
 export const ForgotPasswordPage:FC = () => {
-    const { userLoggedIn, isForgotPassword, isError } = useSelector((store:TUserData) => store.userData);
+    const { userLoggedIn, isForgotPassword, isError } = useSelector((store) => store.userData);
 
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 

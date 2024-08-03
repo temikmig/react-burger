@@ -1,31 +1,30 @@
 import React, { useState, useRef, ChangeEvent, FormEvent, FocusEvent, SyntheticEvent, FC } from 'react';
 import css from './profile-page-main.module.css';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../../../services/types/hooks";
 import { patchUser } from '../../../services/actions/user-data';
-import { AppDispatch, TUserData } from '../../../utils/types';
 
 export const ProfilePageMain:FC = () => {
-    const { data } = useSelector((store:TUserData) => store.userData);
+    const { data } = useSelector((store) => store.userData);
 
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const profileNameRef = useRef<HTMLInputElement>(null);
 
-    const [ profileNameError, setProfileNameError ] = useState<boolean>(false);
-    const [ profileEmailError, setProfileEmailError ] = useState<boolean>(false);
+    const [ profileNameError, setProfileNameError ] = useState(false);
+    const [ profileEmailError, setProfileEmailError ] = useState(false);
 
-    const [submitFlag, setSubmitFlag] = useState<boolean>(false);
+    const [submitFlag, setSubmitFlag] = useState(false);
     
-    const [ changeDataFlag, setChangeDataFlag ] = useState<boolean>(false);
-    const [ profileName, setProfileName ] = useState<string>(data.user.name);
+    const [ changeDataFlag, setChangeDataFlag ] = useState(false);
+    const [ profileName, setProfileName ] = useState(data.user.name);
     const onChangeName = (e:ChangeEvent<HTMLInputElement>) => {
         setProfileName(e.target.value);
         setProfileNameError(false);
         setChangeDataFlag(true);
     }
 
-    const [ profileNameDisabled, setProfileNameDisabled ] = useState<boolean>(true);
+    const [ profileNameDisabled, setProfileNameDisabled ] = useState(true);
     const onChangeProfileNameDisabled = () => {
         setProfileNameDisabled(!profileNameDisabled);
         
@@ -33,14 +32,14 @@ export const ProfilePageMain:FC = () => {
         else setTimeout(() => profileNameRef.current?.blur(), 0);
     }
 
-    const [ profileEmail, setProfileEmail ] = useState<string>(data.user.email);
+    const [ profileEmail, setProfileEmail ] = useState(data.user.email);
     const onChangeEmail = (e:ChangeEvent<HTMLInputElement>) => {
         setProfileEmail(e.target.value);
         setProfileEmailError(false);
         setChangeDataFlag(true);
     }
 
-    const [ profilePassword, setProfilePassword ] = useState<string>('');
+    const [ profilePassword, setProfilePassword ] = useState('');
     const onChangePassword = (e:ChangeEvent<HTMLInputElement>) => {
         setProfilePassword(e.target.value);
         setChangeDataFlag(true);

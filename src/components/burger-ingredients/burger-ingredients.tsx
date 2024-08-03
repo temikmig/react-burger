@@ -2,20 +2,20 @@ import React, {useState, useEffect, useRef, FC} from 'react';
 import css from './burdger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'; 
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { getIngredientsList } from '../../services/actions/burger-ingredients-list';
 
 import IngredientsGroup from './ingredients-group/ingredients-group';
-import { AppDispatch, TIngredient, TIngredientsList } from '../../utils/types';
+import { TIngredient, TIngredientsList } from '../../utils/types';
 
 export const BurgerIngredients:FC = () => {
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(()=>{
       dispatch(getIngredientsList());
     },[dispatch]);
 
-    const { data, isLoad, isError } = useSelector((store:TIngredientsList) => store.ingredientsList);
+    const { data, isLoad, isError } = useSelector((store) => store.ingredientsList);
 
     const success = data.success;
 

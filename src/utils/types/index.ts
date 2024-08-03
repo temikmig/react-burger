@@ -1,9 +1,3 @@
-import { store } from '../../services/store';
-
-export type RootState = ReturnType<typeof store.getState>;
-
-export type AppDispatch = typeof store.dispatch; 
-
 //---
 
 export type THeaderLinkProps = {
@@ -13,9 +7,9 @@ export type THeaderLinkProps = {
 }
 
 export type TIngredient = {
-    index?: number;
     _id: string;
     uid?: string;
+    index?: number;
     name: string;
     type: string;
     proteins: number;
@@ -40,10 +34,24 @@ export type TReadyIngredients = {
     }
 }
 
+export type TOrder = {
+    name: string;
+    order: {
+        number: number;
+    }
+    success: boolean;
+}
+
 export type TBurgerConstructorItemProps = {
     currentIngredient: TIngredient;
     index: number;
     moveIngredient: (fromIndex: number, toIndex: number) => void;
+}
+
+export type TFeedDetailsIngredientProps = {
+    currentIngredient: TIngredient;
+    index: number;
+    countInOrder: number;
 }
 
 export type TUserData = {
@@ -137,4 +145,73 @@ export type TOrderData = {
         isLoad: boolean;
         isError: boolean;
     }
+}
+
+export type TFeed = {
+    success: boolean;
+    orders: ReadonlyArray<TFeedItem>;
+    total: number;
+    totalToday: number;
+}
+
+export type TFeedMap = {
+    success: boolean;
+    orders: ReadonlyArray<TFeedItem>;
+    total: number;
+    totalToday: number;
+}
+
+export type TFeedOrders = {
+    feedData: {
+        success: boolean;
+        orders: Array<TFeedItem>;
+        total: number;
+        totalToday: number;
+    }
+}
+
+export type TFeedOrdersList = {
+    ordersList: TFeedItem[];
+}
+
+export type TOrderCard = {
+    currentOrder: TFeedItem;
+    index?: number;
+}
+
+export type TOrderCardIngredient = {
+    currentIngredient: TIngredient;
+    ingredientIndex: number;
+    maxLength: number;
+    zIndex: number;
+}
+
+export type TOrderDetailsIngredient = {
+    currentIngredient: TIngredient;
+    countInOrder: number;
+}
+
+export type TFeedItem = {
+    ingredients: string[];
+    _id: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
+}
+
+export type TOrderDetails = {
+    success: boolean;
+    orders: TFeedItem[];
+}
+
+export type TFeedItemMap = {
+    ingredients: ReadonlyArray<TIngredient>;
+    _id: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
 }

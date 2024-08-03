@@ -1,25 +1,54 @@
 import { TIngredient } from "../../utils/types";
 
-export const ADD_INGREDIENT = 'ADD_INGREDIENT';
-export const DEL_INGREDIENT = 'DEL_INGREDIENT';
-export const CLEAR_INGREDIENTS = 'CLEAR_INGREDIENTS';
-export const MOVE_INGREDIENTS = 'MOVE_INGREDIENTS';
+import {
+    ADD_INGREDIENT,
+    DEL_INGREDIENT,
+    CLEAR_INGREDIENTS,
+    MOVE_INGREDIENTS
+} from "../constants/burger-constructor";
 
-export const addIngredient = (ingredient:any) => ({
+export interface IAddIngredientAction {
+    readonly type: typeof ADD_INGREDIENT;
+    readonly ingredient: TIngredient;
+}
+
+export interface IDelIngredientAction {
+    readonly type: typeof DEL_INGREDIENT;
+    readonly uid: string;
+}
+
+export interface IClearIngredientsAction {
+    readonly type: typeof CLEAR_INGREDIENTS;
+}
+
+export interface IMoveIngredientsAction {
+    readonly type: typeof MOVE_INGREDIENTS;
+    readonly toIndex: number;
+    readonly fromIndex: number;
+}
+
+export const addIngredient = (ingredient:TIngredient):IAddIngredientAction => ({
     type: ADD_INGREDIENT,
-    payload: ingredient
+    ingredient
 });
 
-export const delIngredient = (uid:any) => ({
+export const delIngredient = (uid:any):IDelIngredientAction => ({
     type: DEL_INGREDIENT,
-    payload: uid
+    uid
 });
 
 export const clearIngredients = () => ({
     type: CLEAR_INGREDIENTS,
 });
 
-export const moveIngredients = ({toIndex, fromIndex}:any) => ({
+export const moveIngredients = (toIndex:number, fromIndex:number):IMoveIngredientsAction => ({
     type: MOVE_INGREDIENTS,
-    payload: {toIndex, fromIndex}
+    toIndex, 
+    fromIndex
 });
+
+export type TIngredientsActions =
+  | IAddIngredientAction
+  | IDelIngredientAction
+  | IClearIngredientsAction
+  | IMoveIngredientsAction;

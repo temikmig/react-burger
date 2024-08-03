@@ -1,12 +1,16 @@
-import { GET_ORDER_SUCCESS, 
+import { TOrder } from '../../utils/types';
+import { 
+    GET_ORDER_SUCCESS, 
     GET_ORDER_REQUEST, 
     GET_ORDER_ERROR 
-} from '../actions/burger-order';
+} from '../constants/burger-order';
 
-import { IActionTypes } from '../../utils/interfaces';
-
+export interface IActionTypes {
+    orderData: TOrder;
+    type: string;
+}
 interface IBurgerOrder {
-    orderData: any;
+    orderData: TOrder[];
     isLoad: boolean;
     isError: boolean;
 }
@@ -17,11 +21,11 @@ const initialState:IBurgerOrder = {
     isError: false
 };
 
-export const burgerOrder = (state = initialState, action:IActionTypes) => { 
+export const burgerOrderReducer = (state = initialState, action:IActionTypes) => { 
     switch (action.type) {
         case GET_ORDER_SUCCESS: return { 
             ...state, 
-            orderData: action.payload,
+            orderData: action.orderData,
             isLoad: false,
             isError: false
         }

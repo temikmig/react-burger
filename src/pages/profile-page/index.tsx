@@ -8,6 +8,7 @@ import { ProfilePageOrders } from './profile-page-orders/profile-page-orders';
 import { LogoutPage } from './profile-logout';
 
 import { Routes, Route, Navigate} from 'react-router-dom';
+import { OrderFeedPage } from '../order-feed-page/order-feed-page';
 
 export const ProfilePage:FC = () => {
     return(
@@ -24,6 +25,7 @@ export const ProfilePage:FC = () => {
                     <Routes>
                         <Route path="" element={<ProfilePageMain />} />
                         <Route path="orders" element={<ProfilePageOrders />} />
+                        <Route path="orders/:number" element={<OrderFeedPage />} />
                         <Route path="logout" element={<LogoutPage />} />
                         <Route path="*" element={<Navigate to="/"/>} />
                     </Routes>

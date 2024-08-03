@@ -4,15 +4,14 @@ import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-de
 
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/types/hooks";
 
 import { registerUser, getUserData } from '../../services/actions/user-data';
-import { AppDispatch, TUserData } from '../../utils/types';
 
 export const RegisterPage = () => {
-    const { userLoggedIn, isError } = useSelector((store:TUserData) => store.userData);
+    const { userLoggedIn, isError } = useSelector((store) => store.userData);
 
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const location = useLocation();
 

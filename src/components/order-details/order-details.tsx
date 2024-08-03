@@ -5,15 +5,15 @@ import { useEffect } from "react";
 
 import { getOrder } from '../../services/actions/burger-order';
 
-import { useSelector, useDispatch  } from "react-redux";
-import { AppDispatch, TIngredient, TOrderData, TReadyBun, TReadyIngredients } from "../../utils/types";
+import { useDispatch, useSelector } from "../../services/types/hooks";
+import { TIngredient } from "../../utils/types";
 
 const OrderDetais:FC = () => {
-    const dispatch:AppDispatch = useDispatch();
-    const { orderData, isLoad, isError } = useSelector((store:TOrderData) => store.burgerOrder);
+    const dispatch = useDispatch();
+    const { orderData, isLoad, isError } = useSelector((store) => store.burgerOrder);
 
-    const orderBun = useSelector((store:TReadyBun) => store.burgerConstructor.bun);
-    const orderIngredients = useSelector((store:TReadyIngredients) => store.burgerConstructor.ingredients);
+    const orderBun = useSelector((store) => store.burgerConstructor.bun);
+    const orderIngredients = useSelector((store) => store.burgerConstructor.ingredients);
     const orderCheck = orderIngredients.map((item:TIngredient) => item._id);
 
     if(orderBun) {

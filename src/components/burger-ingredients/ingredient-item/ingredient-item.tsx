@@ -4,21 +4,21 @@ import css from './ingredient-item.module.css';
 import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import { addIngredientDetailsModal, delIngredientDetailsModal } from "../../../services/actions/burger-ingredient-details";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../../services/types/hooks";
 
 import Modal from '../../modal/modal.jsx';
 import IngredientDetails from '../../ingredient-details/ingredient-details';
 
 import { useDrag } from "react-dnd";
-import { AppDispatch, TIngredient, TReadyBun, TReadyIngredients } from '../../../utils/types';
+import { TIngredient, TReadyBun, TReadyIngredients } from '../../../utils/types';
 
 const IngredientItem:FC<any> = ( {data} ) => {
 
     const ingredient:TIngredient = data;
 
     // вынести
-    const orderBun = useSelector((store:TReadyBun) => store.burgerConstructor.bun);
-    const orderIngredients = useSelector((store:TReadyIngredients) => store.burgerConstructor.ingredients);
+    const orderBun = useSelector((store) => store.burgerConstructor.bun);
+    const orderIngredients = useSelector((store) => store.burgerConstructor.ingredients);
     const orderCheck = orderIngredients.map((item:TIngredient) => item._id);
 
     if(orderBun) {
@@ -27,26 +27,22 @@ const IngredientItem:FC<any> = ( {data} ) => {
     }
     //
 
-    const currentCounter = orderCheck?.filter(item => item===ingredient._id).length;
+    const currentCounter = orderCheck?.filter((item:string) => item===ingredient._id).length;
 
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const handleOpenModal = () => {
         setIsModalOpen(true);
 
-        dispatch(addIngredientDetailsModal({
-            ingredient: ingredient
-        }));
+        dispatch(addIngredientDetailsModal(ingredient));
     }
     
     const handleCloseModal = () => {
         setIsModalOpen(false);
 
-        dispatch(delIngredientDetailsModal({
-            ingredient: ingredient._id
-        }));
+        dispatch(delIngredientDetailsModal(ingredient._id));
     }
 
     const [, ingredientDragRef] = useDrag({

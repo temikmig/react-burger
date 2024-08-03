@@ -1,19 +1,18 @@
 import React, { useState, useEffect, FC, ChangeEvent, FormEvent } from 'react';
 import css from './login-page.module.css';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 
 import { loginUser } from '../../services/actions/user-data';
 import { getUserData } from '../../services/actions/user-data';
-import { AppDispatch, TUserData } from '../../utils/types';
 
 export const LoginPage:FC = () => {
-    const { userLoggedIn, isError } = useSelector((store:TUserData) => store.userData);
+    const { userLoggedIn, isError } = useSelector((store) => store.userData);
 
     const navigate = useNavigate();
     const location = useLocation();
-    const dispatch:AppDispatch = useDispatch();
+    const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(getUserData());
