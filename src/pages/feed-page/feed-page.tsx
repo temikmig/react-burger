@@ -1,29 +1,28 @@
 import React, { FC, useEffect } from 'react';
 import css from './feed-page.module.css';
 import { useDispatch, useSelector } from '../../services/types/hooks';
-import { wsFeedConnectionClose, wsFeedConnectionStart } from '../../services/actions/ws-feed';
+import { wsConnectionClose, wsConnectionStart } from '../../services/actions/ws';
 import { getIngredientsList } from '../../services/actions/burger-ingredients-list';
 import { FeedOrdersList } from '../../components/feed/feed-orders-list/feed-orders-list';
 import FeedOrdersInfo from '../../components/feed/feed-orders-info/feed-orders-info';
+import { WS_URL } from '../../utils/config';
 
 export const FeedPage:FC = () => {
-    const { wsConnected, wsLoad, wsError } = useSelector((store) => store.wsFeed);
-    const feedData = useSelector((store) => store.wsFeed.data);
-    const orders = feedData.orders;
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        if(!wsConnected) {
-            dispatch(wsFeedConnectionStart());
-        }
-        return() => {
-            dispatch(wsFeedConnectionClose());
-        }
-    }, [dispatch, wsFeedConnectionStart]);
 
     useEffect(()=>{
         dispatch(getIngredientsList());
-      },[dispatch, getIngredientsList]);
+    },[dispatch, getIngredientsList]);
+
+    useEffect(() => {
+            dispatch(wsConnectionStart(WS_URL+'/all'));
+        return() => {
+            dispatch(wsConnectionClose());
+        }
+    }, [dispatch, wsConnectionStart]);
+
+    const { wsConnected, wsLoad, wsError, data } = useSelector((store) => store.ws);
+    const orders = data?.orders;
 
     return(
         wsError ? 
@@ -34,10 +33,10 @@ export const FeedPage:FC = () => {
             <main className={css.pageMain}>
                 <h1 className={css.pageStatus}>Загрузка...</h1>
             </main>
-        :wsConnected&&
+        :(wsConnected)&&
             <main className={css.pageMain}>
-                <FeedOrdersList ordersList={orders} />
-                <FeedOrdersInfo feedData={feedData} />
+                <FeedOrdersList ordersList={orders} ordersListHeader="Лента заказов" />
+                <FeedOrdersInfo feedData={data} />
             </main>
     );
 }

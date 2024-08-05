@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import css from './profile-page.module.css';
 
 import ProfileNavigation from '../../components/profile-navigation/profile-navigation';

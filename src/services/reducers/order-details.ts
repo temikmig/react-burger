@@ -11,14 +11,14 @@ export interface IActionTypes {
 }
 
 interface IOrderDetails {
-    data: any;
+    data: TOrderDetails | null;
     success: boolean;
     isLoad: boolean;
     isError: boolean;
 }
 
 const initialState:IOrderDetails = {
-    data: [],
+    data: null,
     success: false,
     isLoad: false,
     isError: false
@@ -36,14 +36,14 @@ export const OrderDetailsReducer = (state = initialState, action:IActionTypes) =
 
         case GET_ORDER_DETAILS_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
 
         case GET_ORDER_DETAILS_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true
         }

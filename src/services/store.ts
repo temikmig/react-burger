@@ -2,49 +2,30 @@ import { Store, createStore, compose, applyMiddleware } from 'redux';
 import { thunk } from 'redux-thunk';
 import { rootReducer } from './reducers';
 import { socketMiddleware, TWSActions } from './middleware/ws-middleware';
-import { WS_URL } from '../utils/config';
 
 import {
-  WS_FEED_CONNECTION_START,
-  WS_FEED_CONNECTION_SUCCESS,
-  WS_FEED_CONNECTION_ERROR,
-  WS_FEED_CONNECTION_CLOSE,
-  WS_FEED_GET_MESSAGE,
-  WS_FEED_SEND_MESSAGE
-} from "./constants/ws-feed";
-
-import {
-  WS_PROFILE_FEED_CONNECTION_START,
-  WS_PROFILE_FEED_CONNECTION_SUCCESS,
-  WS_PROFILE_FEED_CONNECTION_ERROR,
-  WS_PROFILE_FEED_CONNECTION_CLOSE,
-  WS_PROFILE_FEED_GET_MESSAGE,
-  WS_PROFILE_FEED_SEND_MESSAGE
-} from "./constants/ws-profile-feed";
+  WS_CONNECTION_START,
+  WS_CONNECTION_SUCCESS,
+  WS_CONNECTION_ERROR,
+  WS_CONNECTION_CLOSE,
+  WS_GET_MESSAGE,
+  WS_SEND_MESSAGE
+} from "./constants/ws";
 
 const wsFeedActions: TWSActions = {
-  wsInit: WS_FEED_CONNECTION_START,
-  onOpen: WS_FEED_CONNECTION_SUCCESS,
-  onError: WS_FEED_CONNECTION_ERROR,
-  onClose: WS_FEED_CONNECTION_CLOSE,
-  onMessage: WS_FEED_GET_MESSAGE,
-  wsSendMessage: WS_FEED_SEND_MESSAGE
-};
-
-const wsFeedProfileActions: TWSActions = {
-  wsInit: WS_PROFILE_FEED_CONNECTION_START,
-  onOpen: WS_PROFILE_FEED_CONNECTION_SUCCESS,
-  onError: WS_PROFILE_FEED_CONNECTION_ERROR,
-  onClose: WS_PROFILE_FEED_CONNECTION_CLOSE,
-  onMessage: WS_PROFILE_FEED_GET_MESSAGE,
-  wsSendMessage: WS_PROFILE_FEED_SEND_MESSAGE
+  wsInit: WS_CONNECTION_START,
+  onOpen: WS_CONNECTION_SUCCESS,
+  onError: WS_CONNECTION_ERROR,
+  onClose: WS_CONNECTION_CLOSE,
+  onMessage: WS_GET_MESSAGE,
+  wsSendMessage: WS_SEND_MESSAGE
 };
 
 const a: any = window;
 const composeEnhancers = a.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const enhancer = composeEnhancers(
-  applyMiddleware(thunk, socketMiddleware(WS_URL+'/all', wsFeedActions), socketMiddleware(WS_URL, wsFeedProfileActions, true))
+  applyMiddleware(thunk, socketMiddleware(wsFeedActions))
 );
 
 export const store: Store<any> = createStore(

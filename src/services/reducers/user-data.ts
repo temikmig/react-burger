@@ -1,4 +1,4 @@
-import { TUserAuth, TUserData, TUserForgotPassword, TUserPatch, TUserRegistration, TUserResetPassword } from '../../utils/types';
+import { TUserAuth, TUserData, TUserDataRedux, TUserForgotPassword, TUserPatch, TUserRegistration, TUserResetPassword } from '../../utils/types';
 import { 
     LOGIN_USER_SUCCESS, 
     LOGIN_USER_REQUEST, 
@@ -40,7 +40,7 @@ export interface IActionTypes {
 }
 
 interface IUserData {
-    data: any,
+    data: TUserDataRedux | null,
     isLoad: boolean,
     isError: boolean,
     userLoggedIn: boolean,
@@ -49,7 +49,7 @@ interface IUserData {
 }
 
 const initialState:IUserData = {
-    data: [],
+    data: null,
     isLoad: false,
     isError: false,
     userLoggedIn: false,
@@ -70,7 +70,7 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
 
         case LOGIN_USER_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false, 
             userLoggedIn: false
@@ -93,14 +93,14 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
 
         case REGISTER_USER_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
 
         case REGISTER_USER_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true, 
             userLoggedIn: false
@@ -109,7 +109,7 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
         //logout ----------
         case LOGOUT_USER_SUCCESS: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: false, 
             userLoggedIn: false
@@ -117,14 +117,14 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
 
         case LOGOUT_USER_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
 
         case LOGOUT_USER_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true, 
             userLoggedIn: false
@@ -141,14 +141,14 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
 
         case GET_USERDATA_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
 
         case GET_USERDATA_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true, 
             userLoggedIn: false
@@ -165,14 +165,14 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
         
         case FORGOT_PASSWORD_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
         
         case FORGOT_PASSWORD_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true
         }
@@ -189,7 +189,7 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
         
         case RESET_PASSWORD_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
@@ -211,14 +211,14 @@ export const userDataReducer = (state = initialState, action:IActionTypes) => {
         
         case PATCH_USER_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
         
         case PATCH_USER_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true
         }

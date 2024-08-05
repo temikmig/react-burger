@@ -5,13 +5,12 @@ import {
     MOVE_INGREDIENTS 
 } from '../constants/burger-constructor';
 
-import { IActionTypes } from '../../utils/interfaces';
 import { TIngredient } from '../../utils/types';
 import { TIngredientsActions } from '../actions/burger-constructor';
 
 interface IBurgerConstructor {
-    bun: any;
-    ingredients: any;
+    bun: TIngredient | null;
+    ingredients: TIngredient[];
 }
 
 const initialState:IBurgerConstructor = {

@@ -1,4 +1,4 @@
-import { TIngredient } from '../../utils/types';
+import { TIngredient, TIngredientsList } from '../../utils/types';
 import { 
     GET_INGREDIENTS_LIST_REQUEST, 
     GET_INGREDIENTS_LIST_SUCCESS, 
@@ -11,13 +11,13 @@ export interface IActionTypes {
 }
 
 interface IIngredientsList {
-    data: any;
+    data: TIngredientsList | null;
     isLoad: boolean;
     isError: boolean;
 }
 
 const initialState:IIngredientsList = {
-    data: [],
+    data: null,
     isLoad: false,
     isError: false
 };
@@ -33,14 +33,14 @@ export const ingredientsListReducer = (state = initialState, action:IActionTypes
 
         case GET_INGREDIENTS_LIST_REQUEST: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: true,
             isError: false
         }
 
         case GET_INGREDIENTS_LIST_ERROR: return { 
             ...state, 
-            data: [],
+            data: null,
             isLoad: false,
             isError: true
         }

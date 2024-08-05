@@ -3,6 +3,7 @@ import css from './profile-page-main.module.css';
 import { Input, EmailInput, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from "../../../services/types/hooks";
 import { patchUser } from '../../../services/actions/user-data';
+import { TUserPatch } from '../../../utils/types';
 
 export const ProfilePageMain:FC = () => {
     const { data } = useSelector((store) => store.userData);
@@ -53,7 +54,7 @@ export const ProfilePageMain:FC = () => {
 
         if(profileName===""||profileEmail==="") return false;
         else {
-            const data:any = {};
+            const data:TUserPatch = {};
 
             if(profileName!=="") data.name = profileName;
             if(profileEmail!=="") data.email = profileEmail;

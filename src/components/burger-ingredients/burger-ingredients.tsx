@@ -17,9 +17,9 @@ export const BurgerIngredients:FC = () => {
 
     const { data, isLoad, isError } = useSelector((store) => store.ingredientsList);
 
-    const success = data.success;
+    const success = data?.success;
 
-    const list = data.data;
+    const list = data?.data;
 
     const [current, setCurrent] = useState('bun');
 

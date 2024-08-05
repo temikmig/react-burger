@@ -1,34 +1,43 @@
 import React, { FC, useCallback, useEffect, useState } from "react";
 import css from './order-feed-details.module.css';
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { getOrderDetails } from "../../services/actions/order-details";
 import { useDispatch, useSelector } from "../../services/types/hooks";
-import { TIngredient } from "../../utils/types";
-import uuid from "react-uuid";
+import { getIngredientsList } from "../../services/actions/burger-ingredients-list";
+import { TFeedItem, TIngredient } from "../../utils/types";
 import { CurrencyIcon, FormattedDate } from "@ya.praktikum/react-developer-burger-ui-components";
 import OrderFeedDetailsIngredient from "./order-feed-details-ingredient/order-feed-details-ingredient";
 
 const OrderFeedDetais:FC = () => {
+    const location = useLocation();
+
+    console.log(location);
+
+    const storeIngredientsList = useSelector((store) => store.ingredientsList);
+    const allIngredientsList = storeIngredientsList.data?.data;
+
     const { number } = useParams();
     const dispatch = useDispatch();
 
     useEffect(()=>{
-      dispatch(getOrderDetails(number));
-    },[dispatch, getOrderDetails]);
+        dispatch(getOrderDetails(number));
+        if(storeIngredientsList.data===null) dispatch(getIngredientsList());
+    },[dispatch, getOrderDetails, getIngredientsList]);
 
     const { data, isLoad, isError, success } = useSelector((store) => store.orderDetails);
-    const orderIngredients = data.ingredients;
+    const orderIngredients = data?.ingredients;
 
-    const allIngredientsList = useSelector((store) => store.ingredientsList.data.data);
+
 
     const ingredientsList = orderIngredients?.map((currentIngredientId:string, index:number) => allIngredientsList?.find((item:TIngredient) => (item._id===currentIngredientId)));
 
-    const uniqIngredientsList = ingredientsList?.reduce((acc:any, item:TIngredient) => {
+    const uniqIngredientsList = ingredientsList?.reduce((acc:TIngredient[], item:TIngredient) => {
         if (acc.includes(item)) {
           return acc;
         }
+
         return [...acc, item];
-      }, []);
+    }, []);
 
     const [orderPrice, setOrderPrice] = useState(0);
 
@@ -46,8 +55,8 @@ const OrderFeedDetais:FC = () => {
         return count;
     }, {});
 
-    const renderIngredients = useCallback((ingredient:TIngredient, index:number, countsOfIngredients:number) => {
-        return (<OrderFeedDetailsIngredient currentIngredient={ingredient} countInOrder={countsOfIngredients} key={uuid()} index={index}/>)
+    const renderIngredients = useCallback((ingredient:TIngredient, index:number, countInOrder:number) => {
+        return (<OrderFeedDetailsIngredient currentIngredient={ingredient} countInOrder={countInOrder} key={index} />)
     }, []);
 
     return (

@@ -8,13 +8,12 @@ import { TGetIngredientsListActions } from '../actions/burger-ingredients-list';
 import { TGetOrderActions } from '../actions/burger-order';
 import { TUserDataActions } from '../actions/user-data';
 
-import { TWSFeedActions } from '../actions/ws-feed';
-import { TWSProfileFeedActions } from '../actions/ws-profile-feed';
 import { TGetOrderDetailsActions } from '../actions/order-details';
+import { TWebSocketActions } from '../actions/ws';
 
 export type RootState = ReturnType<typeof store.getState>;
 
-export type TApplicationActions = TIngredientsActions | TIngredientDetailsActions | TGetIngredientsListActions | TGetOrderActions | TUserDataActions | TGetOrderDetailsActions | TWSFeedActions | TWSProfileFeedActions;
+export type TApplicationActions = TIngredientsActions | TIngredientDetailsActions | TGetIngredientsListActions | TGetOrderActions | TUserDataActions | TGetOrderDetailsActions | TWebSocketActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<
   ThunkAction<TReturn, Action, RootState, TApplicationActions>

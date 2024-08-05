@@ -3,17 +3,17 @@ import css from './order-card.module.css';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'; 
 import { useSelector, useDispatch } from '../../services/types/hooks';
 import OrderCardIngredient from './order-card-ingredient/order-card-ingredient';
+import { getIngredientsList } from '../../services/actions/burger-ingredients-list';
 import { TIngredient, TOrderCard } from '../../utils/types';
-import uuid from 'react-uuid';
 
 export const OrderCard:FC<TOrderCard> = ({ currentOrder }) => {
     const orderIngredients = currentOrder.ingredients;
     const ingredientsLength = orderIngredients.length; 
 
     const { data, isLoad, isError } = useSelector((store) => store.ingredientsList);
-    const list = data.data;
+    const list = data?.data;
 
-    const ingredientsList = orderIngredients.map((currentIngredientId:string, index:number) => list.find((item:TIngredient) => (item._id===currentIngredientId)));
+    const ingredientsList = orderIngredients?.map((currentIngredientId:string, index:number) => list?.find((item:TIngredient) => (item._id===currentIngredientId)));
 
     const [orderPrice, setOrderPrice] = useState(0);
 
@@ -27,9 +27,7 @@ export const OrderCard:FC<TOrderCard> = ({ currentOrder }) => {
     );
 
     const renderIngredients = useCallback((ingredient:TIngredient, index:number) => {
-        const zIndex = orderIngredients.length - index;
-        if(index<6)
-        return (<OrderCardIngredient currentIngredient={ingredient} ingredientIndex={index} maxLength={ingredientsLength} zIndex={zIndex} key={uuid()}/>)
+        if(index<6) return (<OrderCardIngredient currentIngredient={ingredient} ingredientIndex={index} maxLength={ingredientsLength} index={index} key={index}/>)
     }, []);
 
     return(

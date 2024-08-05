@@ -5,8 +5,8 @@ import { OrderCard } from '../../order-card/order-card'
 import { TFeedItem, TFeedOrders } from '../../../utils/types';
 
 export const FeedOrdersInfo:FC<TFeedOrders> = ({feedData}) => {
-    const feedOrderDone = feedData.orders?.filter((item:TFeedItem) => (item.status==='done'));
-    const feedOrderPending = feedData.orders?.filter((item:TFeedItem) => (item.status==='pending'||item.status==='created'));
+    const feedOrderDone = feedData?.orders?.filter((item:TFeedItem) => (item.status==='done'));
+    const feedOrderPending = feedData?.orders?.filter((item:TFeedItem) => (item.status==='pending'||item.status==='created'));
 
     return(
         <section className={css.feedOrderInfo}>
@@ -44,11 +44,11 @@ export const FeedOrdersInfo:FC<TFeedOrders> = ({feedData}) => {
             </article>
             <article className={css.feedOrdersCount}>
                 <h1 className={css.feedOrdersCountHeader}>Выполнено за все время:</h1>
-                <p className={css.feedOrdersCountContent}>{feedData.total}</p>
+                <p className={css.feedOrdersCountContent}>{feedData?.total}</p>
             </article>
             <article className={css.feedOrdersCount}>
                 <h1 className={css.feedOrdersCountHeader}>Выполнено за сегодня:</h1>
-                <p className={css.feedOrdersCountContent}>{feedData.totalToday}</p>
+                <p className={css.feedOrdersCountContent}>{feedData?.totalToday}</p>
             </article>
         </section>
     );

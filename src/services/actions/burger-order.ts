@@ -1,6 +1,6 @@
 import { BASE_URL } from "../../utils/config";
 import { getCookie, fetchRequestRefresh } from "../../utils/utils";
-import { TIngredient, TOrder, TOrderData } from "../../utils/types";
+import { TIngredient, TOrder } from "../../utils/types";
 
 import {
     GET_ORDER_REQUEST,

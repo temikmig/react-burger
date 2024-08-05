@@ -9,6 +9,7 @@ import {
 } from "../constants/order-details";
 
 import { TFeedItem, TOrderDetails } from "../../utils/types";
+import { getIngredientsList } from "./burger-ingredients-list";
 
 export interface IGetOrderDetailsRequestAction {
     readonly type: typeof GET_ORDER_DETAILS_REQUEST;

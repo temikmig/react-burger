@@ -7,8 +7,8 @@ const ProfileNavigaiton:FC = () => {
     return (
         <>
             <ProfileNavigaitonLink link="" text="Профиль" />
-            <ProfileNavigaitonLink link="orders" text="История заказов" />
-            <ProfileNavigaitonLink link="logout" text="Выход" />
+            <ProfileNavigaitonLink link="/profile/orders" text="История заказов" />
+            <ProfileNavigaitonLink link="/profile/logout" text="Выход" />
         </>
     );
 }

@@ -9,49 +9,49 @@ import {
 } from "../constants/ws-profile-feed";
 
   export interface IActionTypes {
-    feed: any;
-    ingredients: TIngredient[];
+    feed: TFeed;
     wsConnected: boolean;
     wsLoad: boolean;
     wsError: boolean;
+    wsData: boolean;
     type: string
 }
 interface IWSFeed {
-    data: any;
-    ingredients: any;
+    data: TFeed | null;
     wsConnected: boolean;
     wsLoad: boolean;
-    wsError: false
+    wsError: boolean,
+    wsData: boolean
 }
 
 const initialState:IWSFeed = {
-    data: [],
-    ingredients: [],
+    data: null,
     wsConnected: false,
     wsLoad: false,
-    wsError: false
+    wsError: false,
+    wsData: false
 };
 
 export const wsProfileFeedReducer = (state = initialState, action:IActionTypes) => { 
     switch (action.type) {
         case WS_PROFILE_FEED_CONNECTION_START: return { 
-            ...state, wsLoad: true, wsConnected: false, wsError: false
+            ...state, wsLoad: true, wsConnected: false, wsError: false, wsData: false, data: null
         }
 
         case WS_PROFILE_FEED_CONNECTION_SUCCESS: return { 
-            ...state, wsLoad: false, wsConnected: true, wsError: false
+            ...state, wsLoad: false, wsConnected: true, wsError: false, wsData: false, data: null
         }
 
         case WS_PROFILE_FEED_CONNECTION_ERROR: return { 
-            ...state, wsLoad: false, wsConnected: false, wsError: true
+            ...state, wsLoad: false, wsConnected: false, wsError: true, wsData: false, data: null
         }
 
         case WS_PROFILE_FEED_CONNECTION_CLOSE: return { 
-            ...state, wsConnected: false, data: []
+            ...state, wsLoad: false, wsConnected: false, wsError: true, wsData: true
         }
 
         case WS_PROFILE_FEED_GET_MESSAGE: return { 
-            ...state, wsLoad: false, wsConnected: true, wsError: false, data: action.feed
+            ...state, wsLoad: false, wsConnected: true, wsError: false, wsData: true, data: action.feed
         }
 
         case WS_PROFILE_FEED_SEND_MESSAGE: return { 

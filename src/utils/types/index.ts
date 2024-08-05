@@ -20,6 +20,7 @@ export type TIngredient = {
     image: string;
     image_mobile: string;
     image_large: string;
+    count?: number;
 };
   
 export type TReadyBun = {
@@ -50,7 +51,7 @@ export type TBurgerConstructorItemProps = {
 
 export type TFeedDetailsIngredientProps = {
     currentIngredient: TIngredient;
-    index: number;
+    index?: number;
     countInOrder: number;
 }
 
@@ -64,10 +65,19 @@ export type TUserData = {
         email?: string;
         name?: string;
         password?: string;
-        data: any;
     };
     email: string;
     name?: string;
+};
+
+export type TUserDataRedux = {
+    success: boolean;
+    accessToken?: string;
+    refreshToken?: string;
+    user: {
+        email: string;
+        name: string;
+    }
 };
 
 export type TUserAuth = {
@@ -91,8 +101,8 @@ export type TUserResetPassword = {
 };
 
 export type TUserPatch = {
-    name: string;
-    email: string;
+    name?: string;
+    email?: string;
     password?: string;
 };
 
@@ -133,32 +143,20 @@ export type TModalProps = {
 }
 
 export type TIngredientsList = {
-    ingredientsList: any;
-    data: TIngredient[];
+    data: {
+        success: boolean;
+        data: TIngredient[];
+    };
     isError: boolean;
     isLoad: boolean;
 }
 
-export type TOrderData = {
-    burgerOrder: {
-        orderData: any;
-        isLoad: boolean;
-        isError: boolean;
-    }
-}
-
 export type TFeed = {
-    success: boolean;
-    orders: ReadonlyArray<TFeedItem>;
-    total: number;
-    totalToday: number;
-}
-
-export type TFeedMap = {
-    success: boolean;
-    orders: ReadonlyArray<TFeedItem>;
-    total: number;
-    totalToday: number;
+    data: {
+        orders: TFeedItem[];
+        total: number;
+        totalToday: number;
+    }
 }
 
 export type TFeedOrders = {
@@ -172,6 +170,7 @@ export type TFeedOrders = {
 
 export type TFeedOrdersList = {
     ordersList: TFeedItem[];
+    ordersListHeader?: string;
 }
 
 export type TOrderCard = {
@@ -183,7 +182,7 @@ export type TOrderCardIngredient = {
     currentIngredient: TIngredient;
     ingredientIndex: number;
     maxLength: number;
-    zIndex: number;
+    index: number;
 }
 
 export type TOrderDetailsIngredient = {
@@ -192,13 +191,15 @@ export type TOrderDetailsIngredient = {
 }
 
 export type TFeedItem = {
-    ingredients: string[];
     _id: string;
+    ingredients: string[];
+    owner?: string;
     status: string;
-    number: number;
+    name: string;
     createdAt: string;
     updatedAt: string;
-    name: string;
+    number: number;
+    __v: number;
 }
 
 export type TOrderDetails = {

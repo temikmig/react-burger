@@ -29,12 +29,12 @@ const IngredientDetails:FC = () => {
 
     const { data, isLoad, isError } = useSelector((store) => store.ingredientsList);
 
-    const ingredientsList = data.data;
+    const ingredientsList = data?.data;
 
     const ingredientData = ingredientsList?.find((ingredient:TIngredient) => ingredient._id === id);
 
     return(
-        data.success&&
+        data?.success&&
         <>
             <img src={ingredientData.image_large} alt={ingredientData.name} />
             <h2 className={css.ingredientName}>{ingredientData.name}</h2>

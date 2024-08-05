@@ -10,11 +10,11 @@ export interface IActionTypes {
     type: string;
 }
 interface IIngredientDetails {
-    ingredientData: any;
+    ingredientData: TIngredient | null;
 }
 
 const initialState:IIngredientDetails = {
-    ingredientData: []
+    ingredientData: null
 };
 
 export const ingredientDetailsReducer = (state = initialState, action:IActionTypes) => { 
