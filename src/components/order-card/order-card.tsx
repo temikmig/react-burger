@@ -13,7 +13,7 @@ export const OrderCard:FC<TOrderCard> = ({ currentOrder }) => {
     const { data, isLoad, isError } = useSelector((store) => store.ingredientsList);
     const list = data?.data;
 
-    const ingredientsList = orderIngredients?.map((currentIngredientId:string, index:number) => list?.find((item:TIngredient) => (item._id===currentIngredientId)));
+    const ingredientsList = orderIngredients?.map((currentIngredientId:string, index:number) => currentIngredientId&&list?.find((item:TIngredient) => (item._id===currentIngredientId)));
 
     const [orderPrice, setOrderPrice] = useState(0);
 
