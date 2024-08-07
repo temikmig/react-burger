@@ -12,9 +12,11 @@ export const FeedOrdersList:FC<TFeedOrdersList> = ({ordersList, ordersListHeader
             {ordersListHeader!==''&&<h1 className={css.feedOrderListHead}>{ordersListHeader}</h1>}
             <div className={css.feedOrderListCont}>
                 {ordersList?.map((orderItem:TFeedItem, index:number)=> 
+                    // (orderItem.ingredients.map((ing:string) => ing===null&&null).filter(Boolean))&&
                 <Link to={location.pathname+`/`+orderItem.number} key={orderItem._id} state={{background: location}}>
                     <OrderCard currentOrder={orderItem} key={orderItem._id} index={index} />
                 </Link>
+                
                 )}
             </div>
         </section>
