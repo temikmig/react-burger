@@ -13,7 +13,7 @@ interface IIngredientDetails {
     ingredientData: TIngredient | null;
 }
 
-const initialState:IIngredientDetails = {
+export const initialState:IIngredientDetails = {
     ingredientData: null
 };
 

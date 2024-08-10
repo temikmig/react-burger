@@ -12,7 +12,7 @@ import IngredientDetails from '../../ingredient-details/ingredient-details';
 import { useDrag } from "react-dnd";
 import { TIngredient, TReadyBun, TReadyIngredients } from '../../../utils/types';
 
-const IngredientItem:FC<any> = ( {data} ) => {
+const IngredientItem:FC<any> = ( {data, groupType} ) => {
 
     const ingredient:TIngredient = data;
 

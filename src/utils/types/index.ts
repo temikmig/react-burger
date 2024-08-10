@@ -21,6 +21,7 @@ export type TIngredient = {
     image_mobile: string;
     image_large: string;
     count?: number;
+    __v?: number;
 };
   
 export type TReadyBun = {
@@ -117,6 +118,7 @@ export type TTokens = {
 
 export type TIngredientsGroup = {
     groupName: string;
+    groupType: string;
     groupList: Array<TIngredient>;
     headRef: any;
 }

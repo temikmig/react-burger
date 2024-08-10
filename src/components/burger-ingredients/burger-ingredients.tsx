@@ -59,9 +59,9 @@ export const BurgerIngredients:FC = () => {
                 <Tab value="main" active={current === 'main'} onClick={() => {setCurrent('main'); mainRef.current?.scrollIntoView({ behavior: "smooth" })}}>Начинка</Tab>
             </div>
             <section className={css.BurgerIngredientsList} onScroll={handleScroll}>
-                <IngredientsGroup groupName="Булки" headRef={bunRef} groupList={list.filter((item:TIngredient) => item.type==='bun')}/>
-                <IngredientsGroup groupName="Соусы" headRef={sauceRef} groupList={list.filter((item:TIngredient) => item.type==='sauce')}/>
-                <IngredientsGroup groupName="Начинка" headRef={mainRef} groupList={list.filter((item:TIngredient) => item.type==='main')} />
+                <IngredientsGroup groupName="Булки" groupType="ingredient_bun" headRef={bunRef} groupList={list.filter((item:TIngredient) => item.type==='bun')}/>
+                <IngredientsGroup groupName="Соусы" groupType="ingredient_sauce" headRef={sauceRef} groupList={list.filter((item:TIngredient) => item.type==='sauce')}/>
+                <IngredientsGroup groupName="Начинка" groupType="ingredient_main" headRef={mainRef} groupList={list.filter((item:TIngredient) => item.type==='main')} />
             </section>
         </section>
     );

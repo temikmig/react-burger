@@ -22,7 +22,7 @@ interface IWSFeed {
     wsError: boolean
 }
 
-const initialState:IWSFeed = {
+export const initialState:IWSFeed = {
     data: null,
     wsConnected: false,
     wsLoad: false,

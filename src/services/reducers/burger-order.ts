@@ -15,7 +15,7 @@ interface IBurgerOrder {
     isError: boolean;
 }
 
-const initialState:IBurgerOrder = {
+export const initialState:IBurgerOrder = {
     orderData: [],
     isLoad: false,
     isError: false

@@ -13,7 +13,7 @@ interface IBurgerConstructor {
     ingredients: TIngredient[];
 }
 
-const initialState:IBurgerConstructor = {
+export const initialState:IBurgerConstructor = {
     bun: null,
     ingredients: []
 };

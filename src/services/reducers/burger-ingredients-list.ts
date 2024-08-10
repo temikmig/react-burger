@@ -16,7 +16,7 @@ interface IIngredientsList {
     isError: boolean;
 }
 
-const initialState:IIngredientsList = {
+export const initialState:IIngredientsList = {
     data: null,
     isLoad: false,
     isError: false

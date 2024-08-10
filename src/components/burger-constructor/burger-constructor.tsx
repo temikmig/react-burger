@@ -77,7 +77,7 @@ const BurgerConstructor: FC = () => {
 
     return (
         <>
-        <section ref={constructorDropRef} className={`${css.burgerConstructor} ${isHover ? css.burgerConstructorContHover : ''}`}>
+        <section ref={constructorDropRef} className={`${css.burgerConstructor} ${isHover ? css.burgerConstructorContHover : ''}`} data-type="burger_constructor_cont">
             <div className={css.burgerConstructorCont}>
                 <div className={css.burgerIngredientsListFixItem}>
                     {currentBun ?

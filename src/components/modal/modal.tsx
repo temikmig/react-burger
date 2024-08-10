@@ -26,7 +26,7 @@ const Modal:FC<TModalProps> = ( { cont, header='', handleCloseThis } ) => {
     return(
         <ModalOverlay handleCloseOut={handleCloseModal}>
             <div className={css.modalWin} onClick={(e:MouseEvent) => e.stopPropagation()}>
-                <h1 className={header!==''?css.modalHeader:css.modalHeaderNoHeader}>{ header }<div onClick={handleCloseModal} className={css.modalCloseButton}><CloseIcon type="primary" /></div></h1>
+                <h1 className={header!==''?css.modalHeader:css.modalHeaderNoHeader}>{ header }<div onClick={handleCloseModal} className={css.modalCloseButton} data-type="close_modal"><CloseIcon type="primary" /></div></h1>
                 { cont }
             </div>
         </ModalOverlay>

@@ -48,7 +48,7 @@ interface IUserData {
     isResetPassword: boolean
 }
 
-const initialState:IUserData = {
+export const initialState:IUserData = {
     data: null,
     isLoad: false,
     isError: false,

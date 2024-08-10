@@ -24,7 +24,7 @@ const initialState:IOrderDetails = {
     isError: false
 };
 
-export const OrderDetailsReducer = (state = initialState, action:IActionTypes) => { 
+export const orderDetailsReducer = (state = initialState, action:IActionTypes) => { 
     switch (action.type) {
         case GET_ORDER_DETAILS_SUCCESS: return { 
             ...state, 

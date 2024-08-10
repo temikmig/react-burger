@@ -1,11 +1,11 @@
 {
   "name": "react-burger",
   "version": "0.1.0",
+  "homepage": "https://temikmig.github.io/react-burger",
   "private": true,
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.97",
@@ -48,5 +48,15 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^16.0.0",
+    "cypress": "^13.13.2",
+    "eslint-plugin-cypress": "^3.4.0",
+    "fetch-mock": "^11.0.2",
+    "gh-pages": "^6.1.1",
+    "jest": "^27.5.1",
+    "react-test-renderer": "^18.3.1",
+    "redux-mock-store": "^1.5.4"
   }
 }

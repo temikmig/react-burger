@@ -6,7 +6,7 @@ import IngredientItem from '../ingredient-item/ingredient-item';
 import { Link, useLocation } from 'react-router-dom';
 import { TIngredient, TIngredientsGroup } from '../../../utils/types';
 
-const IngredientsGroup:FC<TIngredientsGroup> = ({ groupName, groupList, headRef }) => {
+const IngredientsGroup:FC<TIngredientsGroup> = ({ groupName, groupList, headRef, groupType }) => {
     const location = useLocation();
 
     return (
@@ -14,8 +14,8 @@ const IngredientsGroup:FC<TIngredientsGroup> = ({ groupName, groupList, headRef 
             <h2 className={css.ingredientsGroupHeader}>{groupName}</h2>
             <div className={css.ingredientsGroupContent}>
                 {groupList.map((item:TIngredient, index:number) => 
-                <Link to={`/ingredients/`+item._id} key={item._id} state={{background: location}}>
-                    <IngredientItem data={item} />
+                <Link to={`/ingredients/`+item._id} key={item._id} state={{background: location}} data-type={groupType}>
+                    <IngredientItem data={item} groupType={groupType} />
                 </Link> 
                 )}
             </div>
