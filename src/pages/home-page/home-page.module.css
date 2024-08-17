@@ -1,0 +1,8 @@
+.homeMain {
+    display: flex;
+    justify-content: center;
+}
+
+.homeMain section {
+    width: 600px;
+}

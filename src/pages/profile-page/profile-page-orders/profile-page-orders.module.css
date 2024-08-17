@@ -1,0 +1,22 @@
+.ordersList {
+    max-height: calc(100vh - 200px);
+    overflow-y: auto;
+    composes: mt-10 from global;
+}
+
+.ordersListStatus {
+    composes: text text_type_main-medium text_color_inactive from global;
+}
+
+.ordersList article:first-child {
+    margin-top: 0px;
+}
+
+.ordersList article {
+    margin-top: 20px;
+}
+
+.ordersList a {
+    color: inherit !important;
+    text-decoration: none;
+}

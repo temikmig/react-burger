@@ -1,0 +1,22 @@
+.ingredientsGroup {
+    display: block;
+    composes: mt-10 from global;
+}
+
+.ngredientsGroup article {
+    background-color: #f00;
+}
+
+.ingredientsGroupHeader {
+    composes: text text_type_main-medium from global;
+}
+
+.ingredientsGroupContent {
+    display: flex;
+    flex-wrap: wrap;
+    /* composes: pl-4 from global; */
+}
+
+.ingredientsGroupContent a {
+    text-decoration: none;
+}

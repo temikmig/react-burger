@@ -1,0 +1,30 @@
+.burgerHeader {
+    background: #1C1C21;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.burgerHeaderCont {
+    width: 1280px;
+    display: flex;
+    justify-content: space-between;
+    composes: p-4 from global;
+}
+
+.burgerHeader nav {
+    display: flex;
+    align-items: center;
+}
+
+.headerLogo {
+    display: flex;
+    align-items: center;
+}
+
+.headerNav {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    width: 50%;
+}

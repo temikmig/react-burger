@@ -1,0 +1,48 @@
+.ingredientImage {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(#801AB2, #4C4CFF);
+    margin-right: -16px;
+    z-index: 9;
+    position: relative;
+}
+
+.ingredientImage:first-child {
+    margin-left: 0px;
+}
+
+.ingredientImage:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #000;
+    z-index: 4;
+}
+
+.ingredientImage img {
+    height: 56px;
+    z-index: 5;
+}
+
+.ingredientOther {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(28,28,33,0.6);
+    color: #fff;
+    z-index: 6;
+    composes: text text_type_main-default from global;
+}

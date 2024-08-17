@@ -1,0 +1,14 @@
+.pageSectionForm {
+    composes: mt-20 from global;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.pageSectionButtons {
+    composes: mt-6 from global;
+    width: 480px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}

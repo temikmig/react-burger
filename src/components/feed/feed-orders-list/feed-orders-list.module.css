@@ -1,0 +1,17 @@
+.feedOrderList {
+    width: 600px;
+}
+
+.feedOrderListHead {
+    composes: text text_type_main-large mt-10 mb-5 from global;
+}
+
+.feedOrderListCont {
+    max-height: calc(100vh - 284px);
+    overflow-y: auto;
+}
+
+.feedOrderListCont a {
+    color: inherit !important;
+    text-decoration: none;
+}
